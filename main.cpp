@@ -4,33 +4,30 @@
 #include <chrono>
 #include <thread>
 
+#include "GAME/GAME.h"
+#include "PLAYER/PLAYER.h"
+
 #ifdef __linux__
 #include <X11/Xlib.h>
 #endif
-
-class SomeClass {
-public:
-    explicit SomeClass(int) {}
-};
-
-SomeClass *getC() {
-    return new SomeClass{2};
-}
 
 int main() {
     #ifdef __linux__
     XInitThreads();
     #endif
 
-    SomeClass *c = getC();
-    std::cout << c << "\n";
-    delete c;
+    PLAYER player1, player2, player3;
+    player1 = PLAYER();
+    player2 = player1 = player3;
+    std::cout << player1;
 
     sf::RenderWindow window;
     // NOTE: sync with env variable APP_WINDOW from .github/workflows/cmake.yml:30
-    window.create(sf::VideoMode({800, 700}), "My Window", sf::Style::Default);
+    window.create(sf::VideoMode({800, 600}), "My Window", sf::Style::Default);
     window.setVerticalSyncEnabled(true);
-    //window.setFramerateLimit(60);
+    window.setFramerateLimit(60);
+
+    PLAYER player = PLAYER();
 
     while(window.isOpen()) {
         sf::Event e;
@@ -50,10 +47,13 @@ int main() {
                 break;
             }
         }
-        using namespace std::chrono_literals;
-        std::this_thread::sleep_for(300ms);
+
+        player.update();
 
         window.clear();
+
+        window.draw(player.getSprite());
+
         window.display();
     }
 
