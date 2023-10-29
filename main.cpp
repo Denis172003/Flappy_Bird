@@ -3,7 +3,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-
+#include "OPSTACLES/OPSTACLES.h"
 #include "GAME/GAME.h"
 #include "PLAYER/PLAYER.h"
 
@@ -16,8 +16,8 @@ int main() {
     XInitThreads();
     #endif
 
-    PLAYER player1, player2, player3;
-    player1 = PLAYER();
+    Player player1, player2, player3;
+    player1 = Player();
     player2 = player1 = player3;
     std::cout << player1;
 
@@ -27,7 +27,9 @@ int main() {
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
 
-    PLAYER player = PLAYER();
+    Player player = Player();
+    Opstacles opstacle = Opstacles();
+
 
     while(window.isOpen()) {
         sf::Event e;
@@ -53,6 +55,7 @@ int main() {
         window.clear();
 
         window.draw(player.getSprite());
+        window.draw(opstacle.getSprite());
 
         window.display();
     }

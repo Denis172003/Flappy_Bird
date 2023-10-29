@@ -4,18 +4,17 @@
 #define OOP_PLAYER_H
 
 
-class PLAYER {
+class Player {
 private:
     sf::Texture texture;
     sf::Sprite sprite;
     sf::Vector2f velocity;
-    int *chestie;
 public:
-    PLAYER();
-    ~PLAYER();
-    PLAYER& operator=(const PLAYER& player);
-    PLAYER(const PLAYER& player);
-    friend std::ostream& operator<<(std::ostream & out, const PLAYER& player);
+    Player();
+    ~Player();
+    Player& operator=(const Player& player);
+    Player(const Player& player);
+    friend std::ostream& operator<<(std::ostream & out, const Player& player);
 
     void update();
     void handleKeys();

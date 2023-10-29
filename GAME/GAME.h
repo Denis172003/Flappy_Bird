@@ -1,12 +1,10 @@
-//
-// Created by denis on 28.10.2023.
-//
+#include <SFML/Graphics.hpp>
 
 #ifndef OOP_GAME_H
 #define OOP_GAME_H
 
 
-class GAME {
+class Game {
 
 };
 

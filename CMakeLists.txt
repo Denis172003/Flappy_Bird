@@ -112,7 +112,9 @@ add_executable(${PROJECT_NAME} main.cpp
         GAME/GAME.cpp
         GAME/GAME.h
         PLAYER/PLAYER.cpp
-        PLAYER/PLAYER.h)
+        PLAYER/PLAYER.h
+        OPSTACLES/OPSTACLES.cpp
+        OPSTACLES/OPSTACLES.h)
 
 ###############################################################################
 

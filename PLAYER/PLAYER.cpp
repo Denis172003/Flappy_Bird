@@ -2,8 +2,7 @@
 
 #include <iostream>
 
-PLAYER::PLAYER() {
-    chestie = new int { 15 };
+Player::Player() {
     velocity = {0.0f, 0.0f};
     texture = sf::Texture();
     texture.loadFromFile("ASSETS/TEXTURES/Player.png");
@@ -12,49 +11,45 @@ PLAYER::PLAYER() {
     sprite.setPosition({400.0f, 300.0f});
 }
 
-PLAYER::~PLAYER() {
+Player::~Player() {
     std::cout << "Player destructor\n";
-    delete chestie;
 }
 
-PLAYER& PLAYER::operator=(const PLAYER &player) {
+Player& Player::operator=(const Player &player) {
     texture = player.texture;
     sprite = player.sprite;
     velocity = player.velocity;
-    chestie = player.chestie;
     return *this;
 }
 
-PLAYER::PLAYER(const PLAYER& player) {
+Player::Player(const Player& player) {
     texture = player.texture;
     sprite = player.sprite;
     velocity = player.velocity;
-    chestie = player.chestie;
 }
 
-std::ostream& operator<<(std::ostream& out, const PLAYER& player) {
+std::ostream& operator<<(std::ostream& out, const Player& player) {
     out << "Velocity X: " << player.velocity.x << "\n" << "Velocity Y: " << player.velocity.y;
     return out;
 }
 
-void PLAYER::handleKeys() {
+void Player::handleKeys() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
         jump();
     }
 }
 
-void PLAYER::handleGravity() {
+void Player::handleGravity() {
     if (velocity.y > 2.0f) return;
     velocity.y += 0.3f;
 }
 
-void PLAYER::update() {
+void Player::update() {
     handleKeys();
     handleGravity();
-
     sprite.move(velocity);
 }
 
-void PLAYER::jump() {
+void Player::jump() {
     velocity.y = -3.0f;
 }
