@@ -3,7 +3,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include "OPSTACLES/OPSTACLES.h"
+#include "OPSTACLES/OBSTACLES.h"
 #include "GAME/GAME.h"
 #include "PLAYER/PLAYER.h"
 
@@ -16,19 +16,20 @@ int main() {
     XInitThreads();
     #endif
 
-    Player player1, player2, player3;
-    player1 = Player();
-    player2 = player1 = player3;
-    std::cout << player1;
-
     sf::RenderWindow window;
     // NOTE: sync with env variable APP_WINDOW from .github/workflows/cmake.yml:30
     window.create(sf::VideoMode({800, 600}), "My Window", sf::Style::Default);
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
 
+
+    sf::Texture backgroundTexture;
+    backgroundTexture.loadFromFile("ASSETS/TEXTURES/Background_fb.png.png");
+    sf::Sprite background(backgroundTexture);
+
+
     Player player = Player();
-    Opstacles opstacle = Opstacles();
+    Obstacle obstacle = Obstacle(10.0f, 10.0f);
 
 
     while(window.isOpen()) {
@@ -50,14 +51,19 @@ int main() {
             }
         }
 
+
         player.update();
+        obstacle.update();
+
 
         window.clear();
 
+        window.draw(background);
         window.draw(player.getSprite());
-        window.draw(opstacle.getSprite());
+        window.draw(obstacle.getSprite());
 
         window.display();
+
     }
 
     return 0;

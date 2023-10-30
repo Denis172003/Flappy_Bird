@@ -47,9 +47,21 @@ void Player::handleGravity() {
 void Player::update() {
     handleKeys();
     handleGravity();
+    checkcollision();
     sprite.move(velocity);
 }
 
 void Player::jump() {
     velocity.y = -3.0f;
+}
+
+void Player::checkcollision() {
+    if(sprite.getPosition().y>550.0f || sprite.getPosition().y<-35.0f )
+        die();
+}
+
+void Player::die()
+{
+    sf::Vector2f startPosition(400.0f, 300.0f); // Adjust the coordinates as needed
+    sprite.setPosition(startPosition);
 }

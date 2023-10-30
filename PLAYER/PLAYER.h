@@ -20,6 +20,8 @@ public:
     void handleKeys();
     void handleGravity();
     void jump();
+    void die();
+    void checkcollision();
 
     sf::Sprite getSprite() { return sprite; }
 };
