@@ -114,7 +114,9 @@ add_executable(${PROJECT_NAME} main.cpp
         PLAYER/PLAYER.cpp
         PLAYER/PLAYER.h
         OPSTACLES/OBSTACLES.cpp
-        OPSTACLES/OBSTACLES.h)
+        OPSTACLES/OBSTACLES.h
+        COLLISION/COLLISION.cpp
+        COLLISION/COLLISION.h)
 
 ###############################################################################
 

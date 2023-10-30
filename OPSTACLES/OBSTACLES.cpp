@@ -9,6 +9,7 @@ Obstacle::Obstacle(float  upperHeight, float playerSpace) {
     sprite = sf::Sprite();
     sprite.setTexture(texture);
     sprite.setPosition({700.0f, -100.0f});
+
 }
 
 Obstacle::~Obstacle()

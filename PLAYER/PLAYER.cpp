@@ -1,5 +1,4 @@
 #include "PLAYER.h"
-
 #include <iostream>
 
 Player::Player() {
@@ -8,7 +7,7 @@ Player::Player() {
     texture.loadFromFile("ASSETS/TEXTURES/Player.png");
     sprite = sf::Sprite();
     sprite.setTexture(texture);
-    sprite.setPosition({400.0f, 300.0f});
+    sprite.setPosition({100.0f, 300.0f});
 }
 
 Player::~Player() {
@@ -34,14 +33,42 @@ std::ostream& operator<<(std::ostream& out, const Player& player) {
 }
 
 void Player::handleKeys() {
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
         jump();
+        hasJumped = true;
     }
+
 }
 
 void Player::handleGravity() {
-    if (velocity.y > 2.0f) return;
-    velocity.y += 0.3f;
+
+    if (!hasJumped) {
+        velocity.y = 0.0f;
+    }
+    else {
+        velocity.y += GRAVITY;
+    }
+
+    if (velocity.y > MAX_FALL_SPEED) {
+        velocity.y = MAX_FALL_SPEED;
+    }
+
+
+   /* if (std::abs(velocity.y) > 6.0f) {
+        _rotation = static_cast<float>(std::atan(velocity.y / ROTATION_CONSTANT) * 180.0 / M_PI);
+        if (_rotation > MAX_ROTATION) {
+            _rotation = MAX_ROTATION;
+        }
+    }
+
+
+    float oldX = sprite.getPosition().x;
+
+
+    sprite.setPosition(oldX, sprite.getPosition().y);
+    sprite.setRotation(_rotation);
+*/
 }
 
 void Player::update() {
@@ -52,7 +79,7 @@ void Player::update() {
 }
 
 void Player::jump() {
-    velocity.y = -3.0f;
+    velocity.y = -JUMP_SPEED;
 }
 
 void Player::checkcollision() {
@@ -62,6 +89,7 @@ void Player::checkcollision() {
 
 void Player::die()
 {
-    sf::Vector2f startPosition(400.0f, 300.0f); // Adjust the coordinates as needed
+    hasJumped = false;
+    sf::Vector2f startPosition(100.0f, 300.0f);
     sprite.setPosition(startPosition);
 }
