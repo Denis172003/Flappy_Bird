@@ -16,6 +16,7 @@ int main() {
     #ifdef __linux__
     XInitThreads();
     #endif
+    Player player = Player(nullptr, sf::Vector2u(), 0);
 
     sf::RenderWindow window;
     // NOTE: sync with env variable APP_WINDOW from .github/workflows/cmake.yml:30
@@ -24,12 +25,20 @@ int main() {
     window.setFramerateLimit(60);
 
 
+    sf::Texture *playertexture;
+   // playertexture->loadFromFile("ASSETS/TEXTURES/Animation_Bird.png");
+   // player.getplayertexture(reinterpret_cast<sf::Texture *>(&playertexture));
+
+
+    Animation animation(playertexture, sf::Vector2u(3,9), 0.3f);
+
+    float deltatime= 0.0f;
+    sf::Clock clock;
+
     sf::Texture backgroundTexture;
     backgroundTexture.loadFromFile("ASSETS/TEXTURES/Background_fb.png.png");
     sf::Sprite background(backgroundTexture);
 
-
-    Player player = Player();
     Obstacle obstacle = Obstacle(10.0f, 10.0f);
 
 
