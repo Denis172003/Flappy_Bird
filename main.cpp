@@ -19,7 +19,7 @@ int main() {
     Player player = Player();
     Game game;
     sf::RenderWindow window;
-    // NOTE: sync with env variable APP_WINDOW from .github/workflows/cmake.yml:30
+    // NOTE: sync with env variable APP_WINDOW from .GitHub/workflows/cmake.yml:30
     window.create(sf::VideoMode({800, 600}), "My Window", sf::Style::Default);
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
@@ -30,7 +30,7 @@ int main() {
 
     Player::Animation animation(&playerTexture, sf::Vector2u(3,3), 2000.0f);
 
-    float deltatime= 0.0f;
+    float deltatime;
     sf::Clock clock;
 
     sf::Texture backgroundTexture;
@@ -59,6 +59,7 @@ int main() {
                 break;
             }
         }
+
         if (!player.getHasJumped())
             player.Update(0, 0.0f);
         else

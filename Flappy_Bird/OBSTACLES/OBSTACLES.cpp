@@ -31,7 +31,6 @@ Obstacle& Obstacle::operator=(const Obstacle& obstacle) {
 }
 
 Obstacle::Obstacle(const Obstacle& obstacle) {
-
     texture = obstacle.texture;
     sprite = obstacle.sprite;
     velocity = obstacle.velocity;

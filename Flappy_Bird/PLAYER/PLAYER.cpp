@@ -102,8 +102,8 @@ void Player::setTextureRect() {
 
 void Animation::updateUvRect(const sf::Texture* texture_) {
     if (texture_ == nullptr) return;
-    uvRect.width = texture_->getSize().x/ float(imageCount.x);
-    uvRect.height = texture_->getSize().y/ float(imageCount.y);
+    uvRect.width = static_cast<int>(texture_->getSize().x) / static_cast<int>(imageCount.x);
+    uvRect.height = static_cast<int>(texture_->getSize().y)/ static_cast<int>(imageCount.y);
 }
 
 Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime){
@@ -114,8 +114,8 @@ Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switch
     currentImage.x =0;
 
     if (texture == nullptr) return;
-    uvRect.width = texture->getSize().x/ float(imageCount.x);
-    uvRect.height = texture->getSize().y/ float(imageCount.y);
+    uvRect.width = static_cast<int>(texture->getSize().x) / static_cast<int>(imageCount.x);
+    uvRect.height = static_cast<int>(texture->getSize().y)/ static_cast<int>(imageCount.y);
 }
 
 Animation::~Animation(){
@@ -138,7 +138,7 @@ void Animation::Update(int row, float deltatime) {
         currentImage.x =0;
     }
 
-    uvRect.left = currentImage.x * uvRect.width;
-    uvRect.top = currentImage.y * uvRect.height;
+    uvRect.left = static_cast<int>(currentImage.x) * static_cast<int>(uvRect.width);
+    uvRect.top = static_cast<int>(currentImage.y) * static_cast<int>(uvRect.height);
 }
 

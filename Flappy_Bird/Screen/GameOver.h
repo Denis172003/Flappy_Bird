@@ -6,9 +6,9 @@
 #define OOP_GAMEOVER_H
 
 
-class GameOver {
-
-};
-
+//class GameOver {
+//
+//};
+//
 
 #endif //OOP_GAMEOVER_H

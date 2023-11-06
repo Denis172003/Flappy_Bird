@@ -50,7 +50,6 @@ public:
 class Player: public Animation {
 private:
 
-    [[maybe_unused]] float _rotation{};
     bool hasJumped = false;
     sf::Texture texture;
     sf::Sprite sprite;
@@ -58,8 +57,6 @@ private:
     const float GRAVITY = 1.0f;
     const float MAX_FALL_SPEED = 4.0f;
     const float JUMP_SPEED = 8.0f;
-    [[maybe_unused]] const float MAX_TILT_ANGLE_UP = 5.0f;
-    [[maybe_unused]] const float MAX_TILT_ANGLE_DOWN = -5.0f;
 
 
 public:
@@ -86,10 +83,10 @@ public:
         return texture;
     }
 
-//    void setTexture(const sf::Texture& newTexture) {
-//        texture = newTexture;
-//        sprite.setTexture(newTexture);
-//    }
+    void setTexture(const sf::Texture& newTexture) {
+        texture = newTexture;
+        sprite.setTexture(newTexture);
+    }
 
     sf::Sprite getSprite() { return sprite; }
 };
