@@ -6,6 +6,7 @@
 #include "./Flappy_Bird/OBSTACLES/OBSTACLES.h"
 #include "./Flappy_Bird/GAME/GAME.h"
 #include "./Flappy_Bird/PLAYER/PLAYER.h"
+#include "./Flappy_Bird/COLLISION/COLLISION.h"
 
 #ifdef __linux__
 #include <X11/Xlib.h>
@@ -16,6 +17,7 @@ int main() {
     XInitThreads();
     #endif
 
+    Collision collision;
     Player player = Player();
     Game game;
     sf::RenderWindow window;
