@@ -5,14 +5,15 @@
 #define MAX_ROTATION 35.0f
 #define ROTATION_CONSTANT 2.0f
 
-Player::Player(sf::Texture texture, sf::Vector2u imageCount, float switchTime) : Animation(&texture, imageCount, switchTime) {
+Player::Player() :  Animation(nullptr, sf::Vector2u(3, 3), 0.1f) {
     velocity = {0.0f, 0.0f};
     texture = sf::Texture();
-    texture.loadFromFile("ASSETS/TEXTURES/Player.png");
+    texture.loadFromFile("ASSETS/TEXTURES/Animation_Bird.png");
     sprite = sf::Sprite();
     sprite.setTexture(texture);
     sprite.setPosition({100.0f, 300.0f});
-    sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
+    updateUvRect(&texture);
+    //sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 }
 
 Player::~Player() {
@@ -32,11 +33,19 @@ Player& Player::operator=(const Player &player) {
 //    velocity = player.velocity;
 //}
 
-Player::Player(const Player &player){
-    this->texture = player.texture;
-    this->sprite = player.sprite;
-    this->velocity = player.velocity;
+//Player::Player(const Player& player) {
+//    texture = player.texture;
+//    sprite = player.sprite;
+//    velocity = player.velocity;
+//}
+
+Player::Player(sf::Texture texture, sf::Vector2u imageCount, float switchTime, const Player& player)
+        : Animation(&texture, imageCount, switchTime) {
+    texture = player.texture;
+    sprite = player.sprite;
+    velocity = player.velocity;
 }
+
 
 std::ostream& operator<<(std::ostream& out, const Player& player) {
     out << "Velocity X: " << player.velocity.x << "\n" << "Velocity Y: " << player.velocity.y;
@@ -95,7 +104,7 @@ void Player::die()
 }
 
 void Player::checkcollision() {
-    if(sprite.getPosition().y>600.0f || sprite.getPosition().y<0.0f )
+    if(sprite.getPosition().y>520.0f || sprite.getPosition().y<-40.0f )
         die();
 }
 
@@ -106,6 +115,15 @@ void Player::update() {
     sprite.move(velocity);
 }
 
+void Player::setTextureRect() {
+    texture.loadFromFile("ASSETS/TEXTURES/Animation_Bird.png", this->uvRect);
+}
+
+void Animation::updateUvRect(const sf::Texture* texture_) {
+    if (texture_ == nullptr) return;
+    uvRect.width = texture_->getSize().x/ float(imageCount.x);
+    uvRect.height = texture_->getSize().y/ float(imageCount.y);
+}
 
 Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime){
 
@@ -114,6 +132,7 @@ Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switch
     totalTime =0.0f;
     currentImage.x =0;
 
+    if (texture == nullptr) return;
     uvRect.width = texture->getSize().x/ float(imageCount.x);
     uvRect.height = texture->getSize().y/ float(imageCount.y);
 }

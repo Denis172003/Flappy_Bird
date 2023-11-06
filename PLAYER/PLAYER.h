@@ -12,7 +12,6 @@ public:
     float totalTime;
     float switchTime;
 
-
     Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime);
     ~Animation();
 
@@ -20,13 +19,16 @@ public:
 
     sf::IntRect uvRect;
 
+    void updateUvRect(const sf::Texture* texture_);
+
 };
 
 class Player: public Animation {
 private:
+
     [[maybe_unused]] float _rotation{};
     bool hasJumped = false;
-    sf::Texture *texture;
+    sf::Texture texture;
     sf::Sprite sprite;
     sf::Vector2f velocity;
     const float GRAVITY = 1.0f;
@@ -37,10 +39,11 @@ private:
 
 
 public:
-    Player(sf::Texture texture, sf::Vector2u imageCount, float switchTime);
+    Player();
     ~Player();
     Player& operator=(const Player& player);
-    Player(const Player &player);
+    Player(sf::Texture texture, sf::Vector2u imageCount, float switchTime, const Player& player);
+//    Player(const Player& player);
     friend std::ostream& operator<<(std::ostream & out, const Player& player);
 
     void update();
@@ -49,6 +52,16 @@ public:
     void jump();
     void die();
     void checkcollision();
+    void setTextureRect();
+
+    sf::Texture& getTexture() {
+        return texture;
+    }
+
+    void setTexture(const sf::Texture& newTexture) {
+        texture = newTexture;
+        sprite.setTexture(newTexture);
+    }
 
     sf::Sprite getSprite() { return sprite; }
 };
