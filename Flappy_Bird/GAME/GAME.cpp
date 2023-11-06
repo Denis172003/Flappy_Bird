@@ -10,12 +10,12 @@ Game::~Game() {
     std::cout << "Game destructor\n";
 }
 
-Game::Game(const Game& other) {
-}
-
-Game& Game::operator=(const Game& other) {
-
-}
+//Game::Game(const Game& other) {
+//}
+//
+//Game& Game::operator=(const Game& other) {
+//
+//}
 
 //void initialize() {
 //    window.create(sf::VideoMode({800, 600}), "My Window", sf::Style::Default);

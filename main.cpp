@@ -1,12 +1,11 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <chrono>
-#include <thread>
-#include "OBSTACLES/OBSTACLES.h"
-#include "GAME/GAME.h"
-#include "PLAYER/PLAYER.h"
-
+//#include <chrono>
+//#include <thread>
+#include "./Flappy_Bird/OBSTACLES/OBSTACLES.h"
+#include "./Flappy_Bird/GAME/GAME.h"
+#include "./Flappy_Bird/PLAYER/PLAYER.h"
 
 #ifdef __linux__
 #include <X11/Xlib.h>
@@ -18,7 +17,7 @@ int main() {
     #endif
 
     Player player = Player();
-
+    Game game;
     sf::RenderWindow window;
     // NOTE: sync with env variable APP_WINDOW from .github/workflows/cmake.yml:30
     window.create(sf::VideoMode({800, 600}), "My Window", sf::Style::Default);

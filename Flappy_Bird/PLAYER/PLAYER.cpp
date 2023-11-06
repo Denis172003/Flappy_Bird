@@ -141,3 +141,4 @@ void Animation::Update(int row, float deltatime) {
     uvRect.left = currentImage.x * uvRect.width;
     uvRect.top = currentImage.y * uvRect.height;
 }
+
