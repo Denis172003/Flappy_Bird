@@ -29,8 +29,6 @@ int main() {
 //    player.setTexture(player.getTexture());
 
     Player::Animation animation(&playerTexture, sf::Vector2u(3,3), 2000.0f);
-
-    float deltatime;
     sf::Clock clock;
 
     sf::Texture backgroundTexture;
@@ -39,36 +37,35 @@ int main() {
 
     Obstacle obstacle = Obstacle();
 
-
-    while(window.isOpen()) {
-        deltatime = clock.restart().asSeconds();
+    while (window.isOpen()) {
         sf::Event e = sf::Event();
-        while(window.pollEvent(e)) {
-            switch(e.type) {
-            case sf::Event::Closed:
-                window.close();
-                break;
-            case sf::Event::Resized:
-                std::cout << "New width: " << window.getSize().x << '\n'
-                          << "New height: " << window.getSize().y << '\n';
-                break;
-            case sf::Event::KeyPressed:
-                std::cout << "Received key " << (e.key.code == sf::Keyboard::X ? "X" : "(other)") << "\n";
-                break;
-            default:
-                break;
+        while (window.pollEvent(e)) {
+            switch (e.type) {
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+                case sf::Event::Resized:
+                    std::cout << "New width: " << window.getSize().x << '\n'
+                              << "New height: " << window.getSize().y << '\n';
+                    break;
+                case sf::Event::KeyPressed:
+                    std::cout << "Received key " << (e.key.code == sf::Keyboard::X ? "X" : "(other)") << "\n";
+                    break;
+                default:
+                    break;
             }
         }
+
+        float deltatime = clock.restart().asSeconds();
 
         if (!player.getHasJumped())
             player.Update(0, 0.0f);
         else
-            player.Update(0,deltatime);
+            player.Update(0, deltatime);
         player.setTextureRect();
 
         player.update();
         obstacle.update();
-
 
         window.clear();
 
@@ -77,7 +74,6 @@ int main() {
         window.draw(obstacle.getSprite());
 
         window.display();
-
     }
 
     return 0;
