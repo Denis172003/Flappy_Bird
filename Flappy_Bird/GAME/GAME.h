@@ -21,11 +21,11 @@ private:
         background.setTexture(backgroundTexture);
     }
 
-    void handleEvents() {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-        }
-    }
+//    void handleEvents() {
+//        sf::Event event;
+//        while (window.pollEvent(event)) {
+//        }
+//    }
 
     void update() {
     }
@@ -43,15 +43,15 @@ public:
 
     ~Game();
 
-    Game(const Game& other);
-
-    Game& operator=(const Game& other);
-
-    friend std::ostream& operator<<(std::ostream &out, const Game &other);
+//    Game(const Game& other);
+//
+//    Game& operator=(const Game& other);
+//
+//    friend std::ostream& operator<<(std::ostream &out, const Game &other);
 
     void run() {
         while (window.isOpen()) {
-            handleEvents();
+            //handleEvents();
             update();
             render();
         }

@@ -109,14 +109,16 @@ endif()
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${PROJECT_NAME} main.cpp
-        GAME/GAME.cpp
-        GAME/GAME.h
-        PLAYER/PLAYER.cpp
-        PLAYER/PLAYER.h
-        OBSTACLES/OBSTACLES.cpp
-        OBSTACLES/OBSTACLES.h
-        COLLISION/COLLISION.cpp
-        COLLISION/COLLISION.h)
+        Flappy_Bird/GAME/GAME.cpp
+        Flappy_Bird/GAME/GAME.h
+        Flappy_Bird/PLAYER/PLAYER.cpp
+        Flappy_Bird/PLAYER/PLAYER.h
+        Flappy_Bird/OBSTACLES/OBSTACLES.cpp
+        Flappy_Bird/OBSTACLES/OBSTACLES.h
+        Flappy_Bird/COLLISION/COLLISION.cpp
+        Flappy_Bird/COLLISION/COLLISION.h
+        Flappy_Bird/Screen/GameOver.cpp
+        Flappy_Bird/Screen/GameOver.h)
 
 ###############################################################################
 
