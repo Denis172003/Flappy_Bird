@@ -91,7 +91,4 @@ public:
     sf::Sprite getSprite() { return sprite; }
 };
 
-
-
-
 #endif //OOP_PLAYER_H

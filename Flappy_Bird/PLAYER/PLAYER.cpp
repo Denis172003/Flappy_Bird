@@ -1,11 +1,13 @@
 #include "PLAYER.h"
 #include <iostream>
 
-Player::Player() :  Animation(nullptr, sf::Vector2u(3, 3), 0.1f) {
-    velocity = {0.0f, 0.0f};
-    texture = sf::Texture();
+Player::Player()
+: Animation(nullptr, sf::Vector2u(3, 3), 0.1f),
+          texture(),
+          sprite(),
+          velocity({0.0f, 0.0f})
+{
     texture.loadFromFile("ASSETS/TEXTURES/Animation_Bird.png");
-    sprite = sf::Sprite();
     sprite.setTexture(texture);
     sprite.setPosition({100.0f, 300.0f});
     updateUvRect(&texture);
@@ -17,16 +19,17 @@ Player::~Player() {
 }
 
 Player& Player::operator=(const Player &player) {
-    texture = player.texture;
-    sprite = player.sprite;
-    velocity = player.velocity;
+    if (this != &player) {
+        texture = player.texture;
+        sprite = player.sprite;
+        velocity = player.velocity;
+    }
     return *this;
 }
 
-Player::Player(const Player& player) : Animation(player), texture(player.texture), sprite(player.sprite), velocity(player.velocity) {
+Player::Player(const Player& player)
+: Animation(player), texture(player.texture), sprite(player.sprite), velocity(player.velocity) {
 }
-
-
 
 std::ostream& operator<<(std::ostream& out, const Player& player) {
     out << "Velocity X: " << player.velocity.x << "\n" << "Velocity Y: " << player.velocity.y;
@@ -106,16 +109,16 @@ void Animation::updateUvRect(const sf::Texture* texture_) {
     uvRect.height = static_cast<int>(texture_->getSize().y)/ static_cast<int>(imageCount.y);
 }
 
-Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime){
-
-    this->imageCount = imageCount;
-    this->switchTime = switchTime;
-    totalTime =0.0f;
-    currentImage.x =0;
-
-    if (texture == nullptr) return;
-    uvRect.width = static_cast<int>(texture->getSize().x) / static_cast<int>(imageCount.x);
-    uvRect.height = static_cast<int>(texture->getSize().y)/ static_cast<int>(imageCount.y);
+Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime)
+        : imageCount(imageCount),
+          currentImage({0, 0}),
+          totalTime(0.0f),
+          switchTime(switchTime)
+{
+    if (texture != nullptr) {
+        uvRect.width = static_cast<int>(texture->getSize().x) / static_cast<int>(imageCount.x);
+        uvRect.height = static_cast<int>(texture->getSize().y) / static_cast<int>(imageCount.y);
+    }
 }
 
 Animation::~Animation(){

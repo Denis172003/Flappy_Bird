@@ -1,16 +1,16 @@
 #include "OBSTACLES.h"
 #include <iostream>
 
-//float  upperHeight, float playerSpace
+//float  upperHeight, float obstacleSpace
 
-Obstacle::Obstacle() {
-    velocity = {-1.2f, 0.0f};
-    texture = sf::Texture();
+Obstacle::Obstacle()
+        : texture(),
+          sprite(),
+          velocity({-1.2f, 0.0f})
+{
     texture.loadFromFile("ASSETS/TEXTURES/Pipes.png");
-    sprite = sf::Sprite();
     sprite.setTexture(texture);
     sprite.setPosition({700.0f, -100.0f});
-
 }
 
 Obstacle::~Obstacle()
@@ -19,22 +19,17 @@ Obstacle::~Obstacle()
 }
 
 Obstacle& Obstacle::operator=(const Obstacle& obstacle) {
-    if (this == &obstacle) {
-        return *this;
+    if (this != &obstacle) {
+        texture = obstacle.texture;
+        sprite = obstacle.sprite;
+        velocity = obstacle.velocity;
     }
-
-    texture = obstacle.texture;
-    sprite = obstacle.sprite;
-    velocity = obstacle.velocity;
-
     return *this;
 }
 
-Obstacle::Obstacle(const Obstacle& obstacle) {
-    texture = obstacle.texture;
-    sprite = obstacle.sprite;
-    velocity = obstacle.velocity;
-}
+Obstacle::Obstacle(const Obstacle& obstacle)= default;
+
+
 
 std::ostream& operator<<(std::ostream & out, const Obstacle& obstacle) {
     out << "Velocity X: " << obstacle.velocity.x << "\n" << "Velocity Y: " << obstacle.velocity.y;
@@ -53,3 +48,4 @@ void Obstacle::die()
     sf::Vector2f startPosition(700.0f, -100.0f);
     sprite.setPosition(startPosition);
 }
+
