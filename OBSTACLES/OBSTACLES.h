@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 
-#ifndef OOP_OPSTACLES_H
-#define OOP_OPSTACLES_H
+#ifndef OOP_OBSTACLES_H
+#define OOP_OBSTACLES_H
 
 
 class Obstacle {
@@ -9,14 +9,16 @@ private:
     sf::Texture texture;
     sf::Sprite sprite;
     sf::Vector2f velocity;
-    float gapY;
-    float gapHeight;
+    //float gapY;
+    //float gapHeight;
 public:
-    Obstacle(float upperHeight, float playerSpace);
+    //float upperHeight, float playerSpace
+
+    Obstacle();
     ~Obstacle();
     Obstacle& operator=(const Obstacle& obstacle);
-    Obstacle(const Obstacle& opstacle);
-    friend std::ostream& operator<<(std::ostream & out, const Obstacle& opstacle);
+    Obstacle(const Obstacle& obstacle);
+    friend std::ostream& operator<<(std::ostream & out, const Obstacle& obstacle);
 
     void update();
     void die();
@@ -25,4 +27,4 @@ public:
 };
 
 
-#endif //OOP_OPSTACLES_H
+#endif //OOP_OBSTACLES_H

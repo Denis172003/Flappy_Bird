@@ -1,10 +1,6 @@
 #include "PLAYER.h"
 #include <iostream>
 
-#define M_PI 3.14
-#define MAX_ROTATION 35.0f
-#define ROTATION_CONSTANT 2.0f
-
 Player::Player() :  Animation(nullptr, sf::Vector2u(3, 3), 0.1f) {
     velocity = {0.0f, 0.0f};
     texture = sf::Texture();
@@ -27,24 +23,9 @@ Player& Player::operator=(const Player &player) {
     return *this;
 }
 
-//Player::Player(sf::Texture *texture, sf::Vector2u imageCount, float switchTime, const Player &player): Animation(texture, imageCount, switchTime) {
-//    texture = player.texture;
-//    sprite = player.sprite;
-//    velocity = player.velocity;
-//}
-
-//Player::Player(const Player& player) {
-//    texture = player.texture;
-//    sprite = player.sprite;
-//    velocity = player.velocity;
-//}
-
-Player::Player(sf::Texture texture, sf::Vector2u imageCount, float switchTime, const Player& player)
-        : Animation(&texture, imageCount, switchTime) {
-    texture = player.texture;
-    sprite = player.sprite;
-    velocity = player.velocity;
+Player::Player(const Player& player) : Animation(player), texture(player.texture), sprite(player.sprite), velocity(player.velocity) {
 }
+
 
 
 std::ostream& operator<<(std::ostream& out, const Player& player) {

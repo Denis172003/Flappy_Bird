@@ -3,7 +3,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include "OPSTACLES/OBSTACLES.h"
+#include "OBSTACLES/OBSTACLES.h"
 #include "GAME/GAME.h"
 #include "PLAYER/PLAYER.h"
 
@@ -38,7 +38,7 @@ int main() {
     backgroundTexture.loadFromFile("ASSETS/TEXTURES/Background_fb.png.png");
     sf::Sprite background(backgroundTexture);
 
-    Obstacle obstacle = Obstacle(10.0f, 10.0f);
+    Obstacle obstacle = Obstacle();
 
 
     while(window.isOpen()) {
@@ -60,8 +60,10 @@ int main() {
                 break;
             }
         }
-
-        player.Update(0,deltatime);
+        if (!player.getHasJumped())
+            player.Update(0, 0.0f);
+        else
+            player.Update(0,deltatime);
         player.setTextureRect();
 
         player.update();

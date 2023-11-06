@@ -6,19 +6,43 @@
 
 class Animation
 {
-public:
+protected:
     sf::Vector2u imageCount;
     sf::Vector2u currentImage;
+    sf::IntRect uvRect;
     float totalTime;
     float switchTime;
+
+public:
 
     Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime);
     ~Animation();
 
+public:
+
+//    sf::Vector2u getimageCount() {
+//        return imageCount;
+//    }
+//
+//    sf::Vector2u gecurrentImage() {
+//        return currentImage;
+//    }
+//
+//    sf::IntRect getuvRect(){
+//        return uvRect;
+//    }
+//
+//
+//    float gettotalTime(){
+//        return totalTime;
+//    }
+//
+//    float getswitchTime(){
+//        return switchTime;
+//    }
+
+
     void Update(int row, float deltatime);
-
-    sf::IntRect uvRect;
-
     void updateUvRect(const sf::Texture* texture_);
 
 };
@@ -42,10 +66,10 @@ public:
     Player();
     ~Player();
     Player& operator=(const Player& player);
-    Player(sf::Texture texture, sf::Vector2u imageCount, float switchTime, const Player& player);
-//    Player(const Player& player);
+    Player(const Player& player);
     friend std::ostream& operator<<(std::ostream & out, const Player& player);
 
+public:
     void update();
     void handleKeys();
     void handleGravity();
@@ -54,14 +78,18 @@ public:
     void checkcollision();
     void setTextureRect();
 
+    bool getHasJumped() const {
+        return hasJumped;
+    }
+
     sf::Texture& getTexture() {
         return texture;
     }
 
-    void setTexture(const sf::Texture& newTexture) {
-        texture = newTexture;
-        sprite.setTexture(newTexture);
-    }
+//    void setTexture(const sf::Texture& newTexture) {
+//        texture = newTexture;
+//        sprite.setTexture(newTexture);
+//    }
 
     sf::Sprite getSprite() { return sprite; }
 };
