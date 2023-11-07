@@ -18,6 +18,7 @@ Collision& Collision::operator=(const Collision& collision) {
     return *this;
 }
 
+
 Collision::Collision(const Collision& collision) {
     position = collision.position;
     bounds = collision.bounds;
