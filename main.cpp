@@ -28,7 +28,6 @@ int main() {
     window.setFramerateLimit(60);
 
     sf::Texture playerTexture = player.getTexture();
-//    player.setTexture(player.getTexture());
 
     Player::Animation animation(&playerTexture, sf::Vector2u(3,3), 2000.0f);
     sf::Clock clock, timer;
