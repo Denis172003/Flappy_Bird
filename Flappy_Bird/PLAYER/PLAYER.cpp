@@ -86,7 +86,7 @@ void Player::handleGravity() {
 
 void Rotation::updateRotation(float velocity) {
     if (std::abs(velocity) > 6.0f) {
-        _rotation = (float)(std::atan(velocity / ROTATION_CONSTANT) * 180.0 / M_PI);
+        _rotation = (float)(std::atan(velocity / ROTATION_CONSTANT) * 180.0 / 3.14159265358979323846);
         if (_rotation > MAX_ROTATION) {
             _rotation = MAX_ROTATION;
         }
