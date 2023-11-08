@@ -2,7 +2,9 @@
 
 
 Collision::Collision()
-        : position(0.0f, 0.0f), bounds(sf::FloatRect(0.0f, 0.0f, 0.0f, 0.0f)), isActive(true) {
+        : position(0.0f, 0.0f),
+          bounds(sf::FloatRect(0.0f, 0.0f, 0.0f, 0.0f)),
+          isActive(true) {
 }
 
 
@@ -34,6 +36,4 @@ std::ostream& operator<<(std::ostream& out, const Collision& collision) {
 void Collision::update() {
 }
 
-//void Collision::handleCollision() {
-//}
 

@@ -7,7 +7,7 @@ Player::Player()
           sprite(),
           velocity({0.0f, 0.0f})
 {
-    texture.loadFromFile("ASSETS/TEXTURES/Animation_Bird.png");
+    texture.loadFromFile(R"(C:\Users\denis\CLionProjects\Flappy_Birddddddd\Assets\Textures\Animation_Bird.png)");
     sprite.setTexture(texture);
     sprite.setPosition({100.0f, 300.0f});
     updateUvRect(&texture);
@@ -38,6 +38,10 @@ std::ostream& operator<<(std::ostream& out, const Player& player) {
 
 void Player::jump() {
     velocity.y = -JUMP_SPEED;
+
+    if (getHasJumped()) {
+        getRotation().updateRotation(getVelocity().y);
+    }
 }
 
 void Player::handleKeys() {
@@ -80,6 +84,15 @@ void Player::handleGravity() {
   */
 }
 
+void Rotation::updateRotation(float velocity) {
+    if (std::abs(velocity) > 6.0f) {
+        _rotation = (float)(std::atan(velocity / ROTATION_CONSTANT) * 180.0 / M_PI);
+        if (_rotation > MAX_ROTATION) {
+            _rotation = MAX_ROTATION;
+        }
+    }
+}
+
 void Player::die()
 {
     hasJumped = false;
@@ -100,7 +113,7 @@ void Player::update() {
 }
 
 void Player::setTextureRect() {
-    texture.loadFromFile("ASSETS/TEXTURES/Animation_Bird.png", this->uvRect);
+    texture.loadFromFile(R"(C:\Users\denis\CLionProjects\Flappy_Birddddddd\Assets\Textures\Animation_Bird.png)", this->uvRect);
 }
 
 void Animation::updateUvRect(const sf::Texture* texture_) {
@@ -144,4 +157,3 @@ void Animation::Update(int row, float deltatime) {
     uvRect.left = static_cast<int>(currentImage.x) * static_cast<int>(uvRect.width);
     uvRect.top = static_cast<int>(currentImage.y) * static_cast<int>(uvRect.height);
 }
-

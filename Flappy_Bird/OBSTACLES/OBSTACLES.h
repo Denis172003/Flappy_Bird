@@ -3,9 +3,14 @@
 #ifndef OOP_OBSTACLES_H
 #define OOP_OBSTACLES_H
 
+//enum class ObstacleType {
+//    Pipe_Up,
+//    Pipe_Down,
+//};
 
 class Obstacle {
 private:
+    //ObstacleType type;
     sf::Texture texture;
     sf::Sprite sprite;
     sf::Vector2f velocity;

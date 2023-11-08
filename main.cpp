@@ -19,6 +19,7 @@ int main() {
 
     Collision collision;
     Player player = Player();
+
     Game game;
     sf::RenderWindow window;
     // NOTE: sync with env variable APP_WINDOW from .GitHub/workflows/cmake.yml:30
@@ -26,15 +27,15 @@ int main() {
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
 
-//    player.getTexture().loadFromFile("ASSETS/TEXTURES/Animation_Bird.png");
     sf::Texture playerTexture = player.getTexture();
 //    player.setTexture(player.getTexture());
 
     Player::Animation animation(&playerTexture, sf::Vector2u(3,3), 2000.0f);
-    sf::Clock clock;
+    sf::Clock clock, timer;
+    sf::Time elapsedTime;
 
     sf::Texture backgroundTexture;
-    backgroundTexture.loadFromFile("ASSETS/TEXTURES/Background_fb.png.png");
+    backgroundTexture.loadFromFile(R"(C:\Users\denis\CLionProjects\Flappy_Birddddddd\Assets\Textures\Background_fb.png)");
     sf::Sprite background(backgroundTexture);
 
     Obstacle obstacle = Obstacle();
@@ -60,6 +61,8 @@ int main() {
 
         float deltatime = clock.restart().asSeconds();
 
+        elapsedTime = timer.getElapsedTime();
+
         if (!player.getHasJumped())
             player.Update(0, 0.0f);
         else
@@ -68,6 +71,17 @@ int main() {
 
         player.update();
         obstacle.update();
+
+        Position playerPosition = player.getposition().getPosition();
+        playerPosition.setX(player.getSprite().getPosition().x);
+        playerPosition.setY(player.getSprite().getPosition().y);
+
+        if (player.getHasJumped() && elapsedTime.asSeconds() >= 1.0)
+        {
+            std::cout << "Player X: " << playerPosition.getX() << std::endl;
+            std::cout << "Player Y: " << playerPosition.getY() << std::endl;
+            timer.restart();
+        }
 
         window.clear();
 
