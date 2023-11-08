@@ -3,7 +3,6 @@
 
 #ifndef OOP_PLAYER_H
 #define OOP_PLAYER_H
-#define M_PI 3.14159265358979323846
 
 
 class Rotation {
@@ -116,10 +115,10 @@ public:
         return texture;
     }
 
-    void setTexture(const sf::Texture& newTexture) {
-        texture = newTexture;
-        sprite.setTexture(newTexture);
-    }
+//    void setTexture(const sf::Texture& newTexture) {
+//        texture = newTexture;
+//        sprite.setTexture(newTexture);
+//    }
 
     sf::Sprite getSprite() { return sprite; }
 };
