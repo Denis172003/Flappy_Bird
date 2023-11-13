@@ -8,7 +8,7 @@
 
 class Game {
 public:
-    explicit Game(Player::Animation animation);
+    explicit Game(const Player::Animation& animation);
     ~Game();
     void run();
 

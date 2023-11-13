@@ -5,20 +5,18 @@
 #include "../OBSTACLES/OBSTACLES.h"
 #include "../PLAYER/PLAYER.h"
 #include "../COLLISION/COLLISION.h"
-//ceva
 
-Game::Game(Player::Animation animation) : animation(animation) {
+Game::Game(const Player::Animation& animation) : animation(animation) {
 
     window.create(sf::VideoMode({800, 600}), "My Window", sf::Style::Default);
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
 
-    playerTexture.loadFromFile("path_to_player_texture.png");
-    animation = Player::Animation(&playerTexture, sf::Vector2u(3, 3), 2000.0f);
+    sf::Texture playerTexture1 = player.getTexture();
+    Player::Animation animation1(&playerTexture1, sf::Vector2u(3,3), 2000.0f);
 
     backgroundTexture.loadFromFile("Assets/Background_fb.png.png");
     background.setTexture(backgroundTexture);
-
     obstacle = Obstacle();
 }
 
