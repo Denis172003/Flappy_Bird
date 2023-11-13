@@ -17,7 +17,7 @@ private:
         window.create(sf::VideoMode({800, 600}), "My Window", sf::Style::Default);
         window.setVerticalSyncEnabled(true);
         window.setFramerateLimit(60);
-        backgroundTexture.loadFromFile("ASSETS/TEXTURES/Background_fb.png.png");
+        backgroundTexture.loadFromFile("Assets/Background_fb.png.png");
         background.setTexture(backgroundTexture);
     }
 

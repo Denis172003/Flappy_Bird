@@ -8,7 +8,7 @@ Obstacle::Obstacle()
           sprite(),
           velocity({-1.2f, 0.0f})
 {
-    texture.loadFromFile(R"(C:\Users\denis\CLionProjects\Flappy_Birddddddd\Assets\Textures\Pipes.png)");
+    texture.loadFromFile("Assets/Pipes.png");
     sprite.setTexture(texture);
     sprite.setPosition({700.0f, -100.0f});
 }

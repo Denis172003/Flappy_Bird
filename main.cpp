@@ -34,7 +34,7 @@ int main() {
     sf::Time elapsedTime;
 
     sf::Texture backgroundTexture;
-    backgroundTexture.loadFromFile(R"(C:\Users\denis\CLionProjects\Flappy_Birddddddd\Assets\Textures\Background_fb.png)");
+    backgroundTexture.loadFromFile("Assets/Background_fb.png.png");
     sf::Sprite background(backgroundTexture);
 
     Obstacle obstacle = Obstacle();

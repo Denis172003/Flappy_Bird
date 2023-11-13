@@ -7,7 +7,8 @@ Player::Player()
           sprite(),
           velocity({0.0f, 0.0f})
 {
-    texture.loadFromFile(R"(C:\Users\denis\CLionProjects\Flappy_Birddddddd\Assets\Textures\Animation_Bird.png)");
+
+    texture.loadFromFile("Assets/Animation_Bird.png");
     sprite.setTexture(texture);
     sprite.setPosition({100.0f, 300.0f});
     updateUvRect(&texture);
@@ -113,7 +114,7 @@ void Player::update() {
 }
 
 void Player::setTextureRect() {
-    texture.loadFromFile(R"(C:\Users\denis\CLionProjects\Flappy_Birddddddd\Assets\Textures\Animation_Bird.png)", this->uvRect);
+    texture.loadFromFile("Assets/Animation_Bird.png", this->uvRect);
 }
 
 void Animation::updateUvRect(const sf::Texture* texture_) {
