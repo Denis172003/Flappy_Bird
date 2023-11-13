@@ -66,7 +66,6 @@ public:
 //}
 //
 //sf::Sprite getbackground() {
-//    return background;
 //}
 
 #endif //OOP_GAME_H
