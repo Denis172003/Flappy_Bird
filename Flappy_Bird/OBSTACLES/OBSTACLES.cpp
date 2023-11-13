@@ -1,7 +1,6 @@
 #include "OBSTACLES.h"
 #include <iostream>
 
-//float  upperHeight, float obstacleSpace
 
 Obstacle::Obstacle()
         : texture(),
