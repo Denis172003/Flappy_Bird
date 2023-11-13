@@ -66,23 +66,6 @@ void Player::handleGravity() {
     if (velocity.y > MAX_FALL_SPEED) {
         velocity.y = MAX_FALL_SPEED;
     }
-
-
-  /* if (std::abs(velocity.y) > 6.0f) {
-        _rotation = static_cast<float>(std::atan(velocity.y / ROTATION_CONSTANT) * 180.0 / M_PI);
-        if (_rotation > MAX_ROTATION) {
-            _rotation = MAX_ROTATION;
-        }
-    }
-
-
-    float oldX = sprite.getPosition().x;
-
-
-    sprite.setPosition(oldX, sprite.getPosition().y);
-    sprite.setRotation(_rotation);
-
-  */
 }
 
 void Rotation::updateRotation(float velocity) {

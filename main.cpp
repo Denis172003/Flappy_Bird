@@ -4,7 +4,7 @@
 //#include <chrono>
 //#include <thread>
 #include "./Flappy_Bird/OBSTACLES/OBSTACLES.h"
-#include "./Flappy_Bird/GAME/GAME.h"
+//#include "./Flappy_Bird/GAME/GAME.h"
 #include "./Flappy_Bird/PLAYER/PLAYER.h"
 #include "./Flappy_Bird/COLLISION/COLLISION.h"
 
@@ -20,7 +20,7 @@ int main() {
     Collision collision;
     Player player = Player();
 
-    Game game;
+    //Game game;
     sf::RenderWindow window;
     // NOTE: sync with env variable APP_WINDOW from .GitHub/workflows/cmake.yml:30
     window.create(sf::VideoMode({800, 600}), "My Window", sf::Style::Default);
