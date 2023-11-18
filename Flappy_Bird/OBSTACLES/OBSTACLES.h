@@ -28,6 +28,7 @@ public:
     void update();
     void die();
 
+    sf::Texture getTexture() { return texture; }
     sf::Sprite getSprite() { return sprite; }
 };
 

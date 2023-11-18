@@ -2,7 +2,7 @@
 #include <iostream>
 
 Player::Player()
-: Animation(nullptr, sf::Vector2u(3, 3), 0.1f),
+: Animation(nullptr, sf::Vector2u(3, 3), 0.15f), // Modify flap speed
           texture(),
           sprite(),
           velocity({0.0f, 0.0f})
@@ -33,7 +33,13 @@ Player::Player(const Player& player)
 }
 
 std::ostream& operator<<(std::ostream& out, const Player& player) {
-    out << "Velocity X: " << player.velocity.x << "\n" << "Velocity Y: " << player.velocity.y;
+    out << "Velocity X: " << player.velocity.x << "\n" << "Velocity Y: " << player.velocity.y<<"\n";
+    out << "Player Position: " << player.getposition();
+    return out;
+}
+
+std::ostream& operator<<(std::ostream& out, const Position& position) {
+    out << "(" << position.getX() << ", " << position.getY() << ")";
     return out;
 }
 
@@ -89,6 +95,11 @@ void Player::checkcollision() {
         die();
 }
 
+void Player::setPos(Position pos) {
+    position.setX(pos.getX());
+    position.setY(pos.getY());
+}
+
 void Player::update() {
     handleKeys();
     handleGravity();
@@ -104,6 +115,13 @@ void Animation::updateUvRect(const sf::Texture* texture_) {
     if (texture_ == nullptr) return;
     uvRect.width = static_cast<int>(texture_->getSize().x) / static_cast<int>(imageCount.x);
     uvRect.height = static_cast<int>(texture_->getSize().y)/ static_cast<int>(imageCount.y);
+}
+
+Animation::Animation() {
+    imageCount = {0, 0};
+    currentImage = {0, 0};
+    totalTime = 0.0f;
+    switchTime = 0.0f;
 }
 
 Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime)

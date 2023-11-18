@@ -13,8 +13,8 @@ int main() {
 #ifdef __linux__
     XInitThreads();
 #endif
-    Player animationObject;
-    Game game(animationObject);
+
+    Game game = Game();
     game.run();
     return 0;
 }

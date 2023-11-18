@@ -7,7 +7,7 @@ Obstacle::Obstacle()
           sprite(),
           velocity({-1.2f, 0.0f})
 {
-    texture.loadFromFile("Assets/Pipes.png");
+    texture.loadFromFile("Assets/PIPES.png");
     sprite.setTexture(texture);
     sprite.setPosition({700.0f, -100.0f});
 }
@@ -34,6 +34,7 @@ std::ostream& operator<<(std::ostream & out, const Obstacle& obstacle) {
     out << "Velocity X: " << obstacle.velocity.x << "\n" << "Velocity Y: " << obstacle.velocity.y;
     return out;
 }
+
 
 void Obstacle::update(){
     sprite.move(velocity);

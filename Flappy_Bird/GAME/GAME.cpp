@@ -6,18 +6,14 @@
 #include "../PLAYER/PLAYER.h"
 #include "../COLLISION/COLLISION.h"
 
-Game::Game(const Player::Animation& animation) : animation(animation) {
+Game::Game() {
 
-    window.create(sf::VideoMode({800, 600}), "My Window", sf::Style::Default);
+    animation = Player::Animation(&player.getTexture(), sf::Vector2u(3, 3), 0.2f);
+    window.create(sf::VideoMode({800, 600}), "Flappy Bird", sf::Style::Default);
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
-
-    sf::Texture playerTexture1 = player.getTexture();
-    Player::Animation animation1(&playerTexture1, sf::Vector2u(3,3), 2000.0f);
-
     backgroundTexture.loadFromFile("Assets/Background_fb.png.png");
     background.setTexture(backgroundTexture);
-    obstacle = Obstacle();
 }
 
 Game::~Game() {
@@ -46,12 +42,13 @@ void Game::run() {
         Position playerPosition = player.getposition().getPosition();
         playerPosition.setX(player.getSprite().getPosition().x);
         playerPosition.setY(player.getSprite().getPosition().y);
+        player.setPos(playerPosition);
 
         if (player.getHasJumped() && elapsedTime.asSeconds() >= 1.0) {
-            std::cout << "Player X: " << playerPosition.getX() << std::endl;
-            std::cout << "Player Y: " << playerPosition.getY() << std::endl;
+            std::cout << player << std::endl;
             timer.restart();
         }
+
 
         window.clear();
         window.draw(background);
@@ -79,4 +76,9 @@ void Game::handleEvents() {
                 break;
         }
     }
+}
+
+std::ostream &operator<<(std::ostream &out, const Game &game) {
+    out << "Window size: " << game.window.getSize().x << "x" << game.window.getSize().y << "\n";
+    return out;
 }

@@ -42,6 +42,9 @@ public:
     Position& getPosition() {
         return *this;
     }
+
+    friend std::ostream& operator<<(std::ostream& out, const Position& position);
+
 };
 
 
@@ -55,7 +58,7 @@ protected:
     float switchTime;
 
 public:
-
+    Animation();
     Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime);
     ~Animation();
 
@@ -82,10 +85,12 @@ private:
 
 public:
     Player();
+    explicit Player(sf::Texture *texture);
     ~Player();
     Player& operator=(const Player& player);
     Player(const Player& player);
     friend std::ostream& operator<<(std::ostream & out, const Player& player);
+
 
 public:
     void update();
@@ -95,6 +100,7 @@ public:
     void die();
     void checkcollision();
     void setTextureRect();
+    void setPos(Position pos);
 
     Rotation& getRotation() {
         return rotation;

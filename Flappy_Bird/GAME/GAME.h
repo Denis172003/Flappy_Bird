@@ -8,7 +8,7 @@
 
 class Game {
 public:
-    explicit Game(const Player::Animation& animation);
+    Game();
     ~Game();
     void run();
 
@@ -20,6 +20,9 @@ private:
     sf::Texture backgroundTexture;
     sf::Sprite background;
     Obstacle obstacle;
+
+    friend std::ostream& operator<<(std::ostream& out, const Game& game);
+
 
     void handleEvents();
 };
