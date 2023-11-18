@@ -117,11 +117,11 @@ void Animation::updateUvRect(const sf::Texture* texture_) {
     uvRect.height = static_cast<int>(texture_->getSize().y)/ static_cast<int>(imageCount.y);
 }
 
-Animation::Animation() {
-    imageCount = {0, 0};
-    currentImage = {0, 0};
-    totalTime = 0.0f;
-    switchTime = 0.0f;
+Animation::Animation()
+        : imageCount{0, 0},
+          currentImage{0, 0},
+          totalTime(0.0f),
+          switchTime(0.0f) {
 }
 
 Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime)
