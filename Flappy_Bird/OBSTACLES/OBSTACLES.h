@@ -1,36 +1,35 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
-#ifndef OOP_OBSTACLES_H
-#define OOP_OBSTACLES_H
-
-//enum class ObstacleType {
-//    Pipe_Up,
-//    Pipe_Down,
-//};
-
-class Obstacle {
+class Collision {
 private:
-    //ObstacleType type;
-    sf::Texture texture;
-    sf::Sprite sprite;
-    sf::Vector2f velocity;
-    //float gapY;
-    //float gapHeight;
-public:
-    //float upperHeight, float playerSpace
+    sf::Vector2f position;
+    sf::FloatRect bounds;
+    bool isActive;
 
-    Obstacle();
-    ~Obstacle();
-    Obstacle& operator=(const Obstacle& obstacle);
-    Obstacle(const Obstacle& obstacle);
-    friend std::ostream& operator<<(std::ostream & out, const Obstacle& obstacle);
+public:
+    Collision();
+    ~Collision();
+    Collision& operator=(const Collision& collision);
+
+    [[maybe_unused]] Collision(const Collision& collision);
+    friend std::ostream& operator<<(std::ostream& out, const Collision& collision);
 
     void update();
-    void die();
 
-    sf::Texture getTexture() { return texture; }
-    sf::Sprite getSprite() { return sprite; }
+    // Accessor methods
+    sf::Vector2f getPosition() const { return position; }
+
+    [[maybe_unused]] sf::FloatRect getBounds() const { return bounds; }
+
+    [[maybe_unused]] bool getIsActive() const { return isActive; }
+
+    // Mutator methods
+    void setPosition(const sf::Vector2f& newPosition) { position = newPosition; }
+
+    [[maybe_unused]] void setBounds(const sf::FloatRect& newBounds) { bounds = newBounds; }
+
+    [[maybe_unused]] void setIsActive(bool active) { isActive = active; }
 };
-
-
-#endif //OOP_OBSTACLES_H

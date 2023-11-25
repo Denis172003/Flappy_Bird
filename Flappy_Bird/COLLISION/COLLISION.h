@@ -1,8 +1,7 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
-
-#ifndef OOP_COLLISION_H
-#define OOP_COLLISION_H
 
 class Collision {
 private:
@@ -13,22 +12,25 @@ private:
 public:
     Collision();
     ~Collision();
-
     Collision& operator=(const Collision& collision);
-    Collision(const Collision& collision);
 
+    [[maybe_unused]] Collision(const Collision& collision);
     friend std::ostream& operator<<(std::ostream& out, const Collision& collision);
 
     void update();
-    //void handleCollision();
+
+    [[nodiscard]] sf::Vector2f getPosition() const { return position; }
+
+    [[maybe_unused]] [[nodiscard]] sf::FloatRect getBounds() const { return bounds; }
+
+    [[maybe_unused]] [[nodiscard]] bool getIsActive() const { return isActive; }
+
+    void setPosition(const sf::Vector2f& newPosition) { position = newPosition; }
+
+    [[maybe_unused]] void setBounds(const sf::FloatRect& newBounds) { bounds = newBounds; }
+
+    [[maybe_unused]] void setIsActive(bool active) { isActive = active; }
 
 
-//    sf::Vector2f getPosition() const { return position; }
-//    sf::FloatRect getBounds() const { return bounds; }
-//   bool getIsActive() const { return isActive; }
-//    void setPosition(const sf::Vector2f& newPosition) { position = newPosition; }
-//    void setBounds(const sf::FloatRect& newBounds) { bounds = newBounds; }
-//    void setIsActive(bool active) { isActive = active; }
+
 };
-
-#endif // OOP_COLLISION_H

@@ -1,5 +1,4 @@
-#include "COLLISION.h"
-
+#include "Collision.h"
 
 Collision::Collision()
         : position(0.0f, 0.0f),
@@ -7,13 +6,9 @@ Collision::Collision()
           isActive(true) {
 }
 
-
 Collision::~Collision() {
-    std::cout << "Obstacle destructor\n";
+    std::cout << "Collision destructor\n";
 }
-
-Collision::Collision(const Collision& collision)= default;
-
 
 Collision& Collision::operator=(const Collision& collision) {
     if (this == &collision) {
@@ -26,6 +21,8 @@ Collision& Collision::operator=(const Collision& collision) {
     return *this;
 }
 
+[[maybe_unused]] Collision::Collision(const Collision& collision) = default;
+
 std::ostream& operator<<(std::ostream& out, const Collision& collision) {
     out << "Position: (" << collision.position.x << ", " << collision.position.y << ")\n";
     out << "Bounds: (" << collision.bounds.left << ", " << collision.bounds.top << ", " << collision.bounds.width << ", " << collision.bounds.height << ")\n";
@@ -34,6 +31,16 @@ std::ostream& operator<<(std::ostream& out, const Collision& collision) {
 }
 
 void Collision::update() {
+    bounds.left = position.x;
+    bounds.top = position.y;
+
+    if (isActive) {
+        bounds.width = 34.0f;
+        bounds.height = 24.0f;
+    }
+    else {
+        bounds.width = 0.0f;
+        bounds.height = 0.0f;
+    }
+
 }
-
-

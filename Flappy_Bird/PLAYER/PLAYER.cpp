@@ -2,7 +2,7 @@
 #include <iostream>
 
 Player::Player()
-: Animation(nullptr, sf::Vector2u(3, 3), 0.15f), // Modify flap speed
+: Animation(nullptr, sf::Vector2u(3, 3), 0.15f),
           texture(),
           sprite(),
           velocity({0.0f, 0.0f})
