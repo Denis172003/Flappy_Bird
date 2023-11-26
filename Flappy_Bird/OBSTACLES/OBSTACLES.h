@@ -1,35 +1,26 @@
-#pragma once
+#ifndef OOP_OBSTACLES_H
+#define OOP_OBSTACLES_H
+
 
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
-class Collision {
+class Obstacle {
 private:
-    sf::Vector2f position;
-    sf::FloatRect bounds;
-    bool isActive;
+    sf::Texture texture;
+    sf::Sprite sprite;
+    sf::Vector2f velocity;
 
 public:
-    Collision();
-    ~Collision();
-    Collision& operator=(const Collision& collision);
-
-    [[maybe_unused]] Collision(const Collision& collision);
-    friend std::ostream& operator<<(std::ostream& out, const Collision& collision);
+    Obstacle();
+    ~Obstacle();
+    Obstacle& operator=(const Obstacle& obstacle);
+    Obstacle(const Obstacle& obstacle) = default;
+    friend std::ostream& operator<<(std::ostream& out, const Obstacle& obstacle);
 
     void update();
+    void die();
 
-    // Accessor methods
-    sf::Vector2f getPosition() const { return position; }
-
-    [[maybe_unused]] sf::FloatRect getBounds() const { return bounds; }
-
-    [[maybe_unused]] bool getIsActive() const { return isActive; }
-
-    // Mutator methods
-    void setPosition(const sf::Vector2f& newPosition) { position = newPosition; }
-
-    [[maybe_unused]] void setBounds(const sf::FloatRect& newBounds) { bounds = newBounds; }
-
-    [[maybe_unused]] void setIsActive(bool active) { isActive = active; }
+    const sf::Sprite& getSprite() const { return sprite; }
 };
+
+#endif // OOP_OBSTACLES_H
