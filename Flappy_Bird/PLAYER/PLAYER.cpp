@@ -92,7 +92,7 @@ void Player::die()
     sprite.setPosition(startPosition);
 }
 
-void Player::checkcollision(Obstacle& obstacle, sf::RenderWindow& window) {
+void Player::checkcollision(const Obstacle& obstacle, sf::RenderWindow& window) {
     if(sprite.getPosition().y > 520.0f || sprite.getPosition().y < -40.0f ) {
         die();
         throw BirdOutOfScreenException();

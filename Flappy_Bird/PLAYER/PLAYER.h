@@ -100,7 +100,7 @@ public:
     void handleGravity();
     void jump();
     void die();
-    void checkcollision(Obstacle& obstacle, sf::RenderWindow& window);
+    void checkcollision(const Obstacle& obstacle, sf::RenderWindow& window);
     void setTextureRect();
     void setPos(Position pos);
 
