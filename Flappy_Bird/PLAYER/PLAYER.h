@@ -95,7 +95,7 @@ public:
 
 
 public:
-    void update(Obstacle& obstacle, sf::RenderWindow& window);
+    void update(const Obstacle& obstacle, sf::RenderWindow& window);
     void handleKeys();
     void handleGravity();
     void jump();

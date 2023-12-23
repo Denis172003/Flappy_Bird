@@ -155,7 +155,7 @@ void Player::setPos(Position pos) {
     position.setY(pos.getY());
 }
 
-void Player::update(Obstacle& obstacle, sf::RenderWindow& window) {
+void Player::update(const Obstacle& obstacle, sf::RenderWindow& window) {
     handleKeys();
     handleGravity();
     checkcollision(obstacle, window);
