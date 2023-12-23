@@ -2,9 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
-#include "../OBSTACLES/OBSTACLES.h"
 #include "../PLAYER/PLAYER.h"
-#include "../COLLISION/COLLISION.h"
+#include "../EXCEPTIONS/EXCEPTIONS.h"
 
 Game::Game() {
 
@@ -25,36 +24,45 @@ void Game::run() {
     sf::Time elapsedTime;
 
     while (window.isOpen()) {
-        handleEvents();
-        float deltaTime = clock.restart().asSeconds();
+        try {
+            window.clear();
+            window.draw(background);
 
-        elapsedTime = timer.getElapsedTime();
+            handleEvents();
+            float deltaTime = clock.restart().asSeconds();
 
-        if (!player.getHasJumped())
-            player.Update(0, 0.0f);
-        else
-            player.Update(0, deltaTime);
-        player.setTextureRect();
+            elapsedTime = timer.getElapsedTime();
 
-        player.update();
-        obstacle.update();
+            if (!player.getHasJumped())
+                player.Update(0, 0.0f);
+            else
+                player.Update(0, deltaTime);
+            player.setTextureRect();
 
-        Position playerPosition = player.getposition().getPosition();
-        playerPosition.setX(player.getSprite().getPosition().x);
-        playerPosition.setY(player.getSprite().getPosition().y);
-        player.setPos(playerPosition);
+            player.update(obstacle, window);
+            obstacle.update();
 
-        if (player.getHasJumped() && elapsedTime.asSeconds() >= 1.0) {
-            std::cout << player << std::endl;
-            timer.restart();
+            Position playerPosition = player.getposition().getPosition();
+            playerPosition.setX(player.getSprite().getPosition().x);
+            playerPosition.setY(player.getSprite().getPosition().y);
+            player.setPos(playerPosition);
+
+            if (player.getHasJumped() && elapsedTime.asSeconds() >= 1.0) {
+                std::cout << player << std::endl;
+                timer.restart();
+            }
+
+            window.draw(player.getSprite());
+            window.draw(obstacle.getSprite());
+            window.display();
+
+        } catch (const BirdCollisionException &e) {
+            std::cout << e.what() << std::endl;
+        } catch (const BirdOutOfScreenException &e) {
+            std::cout << e.what() << std::endl;
+        } catch (const GameOverException &e) {
+            std::cout << e.what() << std::endl;
         }
-
-
-        window.clear();
-        window.draw(background);
-        window.draw(player.getSprite());
-        window.draw(obstacle.getSprite());
-        window.display();
     }
 }
 

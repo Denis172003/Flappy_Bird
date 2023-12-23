@@ -1,8 +1,9 @@
 #include "PLAYER.h"
 #include <iostream>
+#include "../EXCEPTIONS/EXCEPTIONS.h"
 
 Player::Player()
-: Animation(nullptr, sf::Vector2u(3, 3), 0.15f),
+        : Animation(nullptr, sf::Vector2u(3, 3), 0.15f),
           texture(),
           sprite(),
           velocity({0.0f, 0.0f})
@@ -29,7 +30,7 @@ Player& Player::operator=(const Player &player) {
 }
 
 Player::Player(const Player& player)
-: Animation(player), texture(player.texture), sprite(player.sprite), velocity(player.velocity) {
+        : Animation(player), texture(player.texture), sprite(player.sprite), velocity(player.velocity) {
 }
 
 std::ostream& operator<<(std::ostream& out, const Player& player) {
@@ -74,6 +75,7 @@ void Player::handleGravity() {
     }
 }
 
+
 void Rotation::updateRotation(float velocity) {
     if (std::abs(velocity) > 6.0f) {
         _rotation = (float)(std::atan(velocity / ROTATION_CONSTANT) * 180.0 / 3.14159265358979323846);
@@ -90,9 +92,62 @@ void Player::die()
     sprite.setPosition(startPosition);
 }
 
-void Player::checkcollision() {
-    if(sprite.getPosition().y>520.0f || sprite.getPosition().y<-40.0f )
+void Player::checkcollision(Obstacle& obstacle, sf::RenderWindow& window) {
+    if(sprite.getPosition().y > 520.0f || sprite.getPosition().y < -40.0f ) {
         die();
+        throw BirdOutOfScreenException();
+    }
+
+    sf::FloatRect birdBounds = sprite.getGlobalBounds();
+
+    float stateWidth = birdBounds.width / 3 - 40;
+    float stateHeight = birdBounds.height / 3 - 40;
+
+    sf::FloatRect realBirdBounds(birdBounds.left + 20, birdBounds.top + 20, stateWidth, stateHeight);
+
+    sf::FloatRect upperObstacleBounds(obstacle.getSprite().getPosition().x, obstacle.getSprite().getPosition().y, obstacle.getSprite().getGlobalBounds().width, obstacle.getSprite().getGlobalBounds().height / 2 - 70);
+    sf::FloatRect lowerObstacleBounds(obstacle.getSprite().getPosition().x, obstacle.getSprite().getPosition().y + obstacle.getSprite().getGlobalBounds().height / 2 + 70, obstacle.getSprite().getGlobalBounds().width, obstacle.getSprite().getGlobalBounds().height / 2);
+
+    bool showHitboxes;
+
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::H)) {
+        showHitboxes = true;
+    }
+    else {
+        showHitboxes = false;
+    }
+
+
+
+    if (showHitboxes) {
+        sf::RectangleShape birdBox(sf::Vector2f(realBirdBounds.width, realBirdBounds.height));
+        birdBox.setPosition(realBirdBounds.left, realBirdBounds.top);
+        birdBox.setFillColor(sf::Color::Transparent);
+        birdBox.setOutlineColor(sf::Color::Red);
+        birdBox.setOutlineThickness(1.0f);
+
+        sf::RectangleShape upperObstacleBox(sf::Vector2f(upperObstacleBounds.width, upperObstacleBounds.height));
+        upperObstacleBox.setPosition(upperObstacleBounds.left, upperObstacleBounds.top);
+        upperObstacleBox.setFillColor(sf::Color::Transparent);
+        upperObstacleBox.setOutlineColor(sf::Color::Red);
+        upperObstacleBox.setOutlineThickness(1.0f);
+
+        sf::RectangleShape lowerObstacleBox(sf::Vector2f(lowerObstacleBounds.width, lowerObstacleBounds.height));
+        lowerObstacleBox.setPosition(lowerObstacleBounds.left, lowerObstacleBounds.top);
+        lowerObstacleBox.setFillColor(sf::Color::Transparent);
+        lowerObstacleBox.setOutlineColor(sf::Color::Red);
+        lowerObstacleBox.setOutlineThickness(1.0f);
+
+        window.draw(birdBox);
+        window.draw(upperObstacleBox);
+        window.draw(lowerObstacleBox);
+    }
+
+    if (realBirdBounds.intersects(upperObstacleBounds) || realBirdBounds.intersects(lowerObstacleBounds)) {
+        die();
+        throw BirdCollisionException();
+    }
 }
 
 void Player::setPos(Position pos) {
@@ -100,10 +155,10 @@ void Player::setPos(Position pos) {
     position.setY(pos.getY());
 }
 
-void Player::update() {
+void Player::update(Obstacle& obstacle, sf::RenderWindow& window) {
     handleKeys();
     handleGravity();
-    checkcollision();
+    checkcollision(obstacle, window);
     sprite.move(velocity);
 }
 

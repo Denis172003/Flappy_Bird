@@ -1,8 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include "../OBSTACLES/OBSTACLES.h"
 
 #ifndef OOP_PLAYER_H
 #define OOP_PLAYER_H
+
 
 
 class Rotation {
@@ -85,7 +87,7 @@ private:
 
 public:
     Player();
-   // explicit Player(sf::Texture *texture);
+    // explicit Player(sf::Texture *texture);
     ~Player();
     Player& operator=(const Player& player);
     Player(const Player& player);
@@ -93,12 +95,12 @@ public:
 
 
 public:
-    void update();
+    void update(Obstacle& obstacle, sf::RenderWindow& window);
     void handleKeys();
     void handleGravity();
     void jump();
     void die();
-    void checkcollision();
+    void checkcollision(Obstacle& obstacle, sf::RenderWindow& window);
     void setTextureRect();
     void setPos(Position pos);
 

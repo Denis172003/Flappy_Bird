@@ -118,7 +118,9 @@ add_executable(${PROJECT_NAME} main.cpp
         Flappy_Bird/COLLISION/COLLISION.cpp
         Flappy_Bird/COLLISION/COLLISION.h
         Flappy_Bird/Screen/GameOver.cpp
-        Flappy_Bird/Screen/GameOver.h)
+        Flappy_Bird/Screen/GameOver.h
+        Flappy_Bird/EXCEPTIONS/EXCEPTIONS.cpp
+        Flappy_Bird/EXCEPTIONS/EXCEPTIONS.h)
 
 ###############################################################################
 
