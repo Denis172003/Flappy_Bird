@@ -77,13 +77,24 @@ void Player::handleGravity() {
 
 
 void Rotation::updateRotation(float velocity) {
-    if (std::abs(velocity) > 6.0f) {
-        _rotation = (float)(std::atan(velocity / ROTATION_CONSTANT) * 180.0 / 3.14159265358979323846);
-        if (_rotation > MAX_ROTATION) {
-            _rotation = MAX_ROTATION;
-        }
+
+    float rotation = velocity * 2.0f;
+
+
+    if ((_rotation > 0.2f && rotation > 0) || (_rotation < -0.2f && rotation < 0)) {
+        rotation = 0;
+    }
+
+    _rotation += rotation;
+
+
+    if (_rotation > MAX_ROTATION) {
+        _rotation = std::min(_rotation, MAX_ROTATION);
+    } else if (_rotation < -MAX_ROTATION) {
+        _rotation = std::max(_rotation, -MAX_ROTATION);
     }
 }
+
 
 void Player::die()
 {
@@ -105,8 +116,8 @@ void Player::checkcollision(const Obstacle& obstacle, sf::RenderWindow& window) 
 
     sf::FloatRect realBirdBounds(birdBounds.left + 29, birdBounds.top+40, stateWidth, stateHeight);
 
-    sf::FloatRect upperObstacleBounds(obstacle.getSprite().getPosition().x, obstacle.getSprite().getPosition().y, obstacle.getSprite().getGlobalBounds().width, obstacle.getSprite().getGlobalBounds().height / 2 - 72);
-    sf::FloatRect lowerObstacleBounds(obstacle.getSprite().getPosition().x, obstacle.getSprite().getPosition().y + obstacle.getSprite().getGlobalBounds().height / 2 + 72, obstacle.getSprite().getGlobalBounds().width, obstacle.getSprite().getGlobalBounds().height / 2);
+    sf::FloatRect upperObstacleBounds(obstacle.getSprite().getPosition().x, obstacle.getSprite().getPosition().y, obstacle.getSprite().getGlobalBounds().width - 2, obstacle.getSprite().getGlobalBounds().height / 2 - 72);
+    sf::FloatRect lowerObstacleBounds(obstacle.getSprite().getPosition().x, obstacle.getSprite().getPosition().y + obstacle.getSprite().getGlobalBounds().height / 2 + 72, obstacle.getSprite().getGlobalBounds().width -2 , obstacle.getSprite().getGlobalBounds().height / 2);
 
     bool showHitboxes;
 
@@ -159,6 +170,7 @@ void Player::update(const Obstacle& obstacle, sf::RenderWindow& window) {
     handleKeys();
     handleGravity();
     checkcollision(obstacle, window);
+    rotation.updateRotation(velocity.y);
     sprite.move(velocity);
 }
 

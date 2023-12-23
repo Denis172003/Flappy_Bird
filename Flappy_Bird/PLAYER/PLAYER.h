@@ -10,8 +10,8 @@
 class Rotation {
 private:
 
-    float _rotation;
-    const float ROTATION_CONSTANT = 6.0f;
+    float _rotation = 0.1f;
+//    const float ROTATION_CONSTANT = 6.0f;
     const float MAX_ROTATION = 8.0f;
 
 public:
