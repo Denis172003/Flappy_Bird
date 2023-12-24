@@ -1,9 +1,5 @@
-
-#ifndef OOP_GAMEOVER_H
-#define OOP_GAMEOVER_H
-
-
-#pragma once
+#ifndef GAME_OVER_H
+#define GAME_OVER_H
 
 #include <SFML/Graphics.hpp>
 
@@ -20,4 +16,4 @@ public:
     void draw(sf::RenderWindow& window);
 };
 
-#endif //OOP_GAMEOVER_H
+#endif // GAME_OVER_H

@@ -19,7 +19,6 @@ void GameOver::init() {
     gameOverText.setCharacterSize(50);
     gameOverText.setFillColor(sf::Color::Red);
     gameOverText.setPosition(200.0f, 250.0f);
-
 }
 
 void GameOver::draw(sf::RenderWindow& window) {

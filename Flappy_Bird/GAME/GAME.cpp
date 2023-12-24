@@ -13,6 +13,8 @@ Game::Game() {
     window.setFramerateLimit(60);
     backgroundTexture.loadFromFile("Assets/Background_fb.png.png");
     background.setTexture(backgroundTexture);
+    gameOver = false;
+    gameOverScreen = GameOver();
 }
 
 Game::~Game() {
@@ -58,11 +60,20 @@ void Game::run() {
 
         } catch (const BirdCollisionException &e) {
             std::cout << e.what() << std::endl;
+            handleGameOver();
         } catch (const BirdOutOfScreenException &e) {
             std::cout << e.what() << std::endl;
+            handleGameOver();
         } catch (const GameOverException &e) {
             std::cout << e.what() << std::endl;
+            handleGameOver();
         }
+    }
+
+    if (gameOver) {
+        gameOverScreen.draw(window);
+        window.display();
+        sf::sleep(sf::seconds(2));
     }
 }
 
@@ -89,4 +100,11 @@ void Game::handleEvents() {
 std::ostream &operator<<(std::ostream &out, const Game &game) {
     out << "Window size: " << game.window.getSize().x << "x" << game.window.getSize().y << "\n";
     return out;
+}
+
+void Game::handleGameOver() {
+    gameOver = true;
+    gameOverScreen.draw(window);
+    window.display();
+    sf::sleep(sf::seconds(2));
 }
