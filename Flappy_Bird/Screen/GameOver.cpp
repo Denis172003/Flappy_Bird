@@ -10,7 +10,7 @@ GameOver::~GameOver() {
 }
 
 void GameOver::init() {
-    if (!font.loadFromFile("path/to/your/font.ttf")) {
+    if (!font.loadFromFile("Assets/flappy-font.ttf")) {
         std::cout << "Error loading font\n";
     }
 
@@ -20,6 +20,7 @@ void GameOver::init() {
     gameOverText.setFillColor(sf::Color::Red);
     gameOverText.setPosition(200.0f, 250.0f);
 }
+
 
 void GameOver::draw(sf::RenderWindow& window) {
     window.draw(gameOverText);
