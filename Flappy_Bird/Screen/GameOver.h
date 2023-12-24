@@ -5,8 +5,8 @@
 
 class GameOver {
 private:
-    sf::Font font;
-    sf::Text gameOverText;
+    sf::Texture texture;
+    sf::Sprite sprite;
 
 public:
     GameOver();
@@ -14,6 +14,7 @@ public:
 
     void init();
     void draw(sf::RenderWindow& window);
+    sf::Sprite getSprite() { return sprite; }
 };
 
 #endif // GAME_OVER_H

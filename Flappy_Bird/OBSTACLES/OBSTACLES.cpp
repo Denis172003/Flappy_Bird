@@ -4,7 +4,7 @@
 Obstacle::Obstacle()
         : texture(),
           sprite(),
-          velocity({-1.2f, 0.0f}) {
+          velocity({-2.2f, 0.0f}) {
     texture.loadFromFile("Assets/PIPES.png");
     sprite.setTexture(texture);
     sprite.setPosition({700.0f, -100.0f});

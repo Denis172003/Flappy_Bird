@@ -1,3 +1,4 @@
+// GameOver.cpp
 #include <iostream>
 #include "GameOver.h"
 
@@ -10,18 +11,14 @@ GameOver::~GameOver() {
 }
 
 void GameOver::init() {
-    if (!font.loadFromFile("Assets/flappy-font.ttf")) {
-        std::cout << "Error loading font\n";
+    if (!texture.loadFromFile("Assets/Game_Over_bg.png")) {
+        std::cout << "Error loading texture\n";
     }
 
-    gameOverText.setFont(font);
-    gameOverText.setString("Game Over");
-    gameOverText.setCharacterSize(50);
-    gameOverText.setFillColor(sf::Color::Red);
-    gameOverText.setPosition(200.0f, 250.0f);
+    sprite.setTexture(texture);
+    sprite.setPosition({100.0f, 300.0f});
 }
 
-
 void GameOver::draw(sf::RenderWindow& window) {
-    window.draw(gameOverText);
+    window.draw(sprite);
 }

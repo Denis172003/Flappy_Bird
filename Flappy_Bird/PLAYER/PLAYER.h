@@ -87,7 +87,6 @@ private:
 
 public:
     Player();
-    // explicit Player(sf::Texture *texture);
     ~Player();
     Player& operator=(const Player& player);
     Player(const Player& player);
