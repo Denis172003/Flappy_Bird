@@ -129,6 +129,8 @@ public:
 //    }
 
     sf::Sprite getSprite() { return sprite; }
+
+    void reset();
 };
 
 #endif //OOP_PLAYER_H

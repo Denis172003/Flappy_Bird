@@ -103,6 +103,13 @@ void Player::die()
     sprite.setPosition(startPosition);
 }
 
+void Player::reset() {
+    hasJumped = false;
+    position.setX(0.0f);
+    position.setY(0.0f);
+    velocity = sf::Vector2f(0.0f, 0.0f);
+}
+
 void Player::checkcollision(const Obstacle& obstacle, sf::RenderWindow& window) {
     if(sprite.getPosition().y > 520.0f || sprite.getPosition().y < -40.0f ) {
         die();

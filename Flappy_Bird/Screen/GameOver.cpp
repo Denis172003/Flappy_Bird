@@ -14,8 +14,9 @@ void GameOver::init() {
     if (!texture.loadFromFile("Assets/Game_Over_bg.png")) {
         std::cout << "Error loading texture\n";
     }
+
     sprite.setTexture(texture);
-    sprite.setPosition({100.0f, 300.0f});
+    sprite.setPosition({175.0f, 100.0f});
 }
 
 void GameOver::draw(sf::RenderWindow& window) {

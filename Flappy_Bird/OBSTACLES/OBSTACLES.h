@@ -21,6 +21,8 @@ public:
     void die();
 
     const sf::Sprite& getSprite() const { return sprite; }
+
+    void reset();
 };
 
 #endif // OOP_OBSTACLES_H

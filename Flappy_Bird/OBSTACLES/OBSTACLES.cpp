@@ -40,3 +40,8 @@ void Obstacle::die() {
     sf::Vector2f startPosition(700.0f, -100.0f);
     sprite.setPosition(startPosition);
 }
+
+void Obstacle::reset() {
+    sf::Vector2f startPosition(700.0f, -100.0f);
+    sprite.setPosition(startPosition);
+}

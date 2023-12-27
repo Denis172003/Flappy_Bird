@@ -75,10 +75,6 @@ void Game::run() {
         }
     }
 
-    if (gameOver) {
-        displayGameOverScreen();
-        sf::sleep(sf::seconds(2));
-    }
 }
 
 void Game::handleEvents() {
@@ -93,6 +89,11 @@ void Game::handleEvents() {
                           << "New height: " << window.getSize().y << '\n';
                 break;
             case sf::Event::KeyPressed:
+                if (e.key.code == sf::Keyboard::Space || e.key.code == sf::Keyboard::R) {
+                    if (gameOver) {
+                        restart();
+                    }
+                }
                 std::cout << "Received key " << (e.key.code == sf::Keyboard::X ? "X" : "(other)") << "\n";
                 break;
             default:
@@ -108,10 +109,40 @@ std::ostream &operator<<(std::ostream &out, const Game &game) {
 
 void Game::handleGameOver() {
     gameOver = true;
-}
 
-void Game::displayGameOverScreen() {
     window.clear();
+    window.draw(background);
+    window.display();
+
     gameOverScreen.draw(window);
     window.display();
+
+
+    sf::Event event{};
+    while (window.waitEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            window.close();
+            break;
+        } else if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == sf::Keyboard::Space || event.key.code == sf::Keyboard::R) {
+                restart();
+                break;
+            }
+        } else if (event.type == sf::Event::MouseButtonPressed) {
+            if (event.mouseButton.button == sf::Mouse::Right) {
+                restart();
+                break;
+            }
+        }
+    }
+}
+
+void Game::restart() {
+    window.create(sf::VideoMode({800, 600}), "Flappy Bird", sf::Style::Default);
+    window.setTitle("Flappy Bird");
+    window.setVerticalSyncEnabled(true);
+    window.setFramerateLimit(60);
+    backgroundTexture.loadFromFile("Assets/Background_fb.png");
+    background.setTexture(backgroundTexture);
+    gameOver = false;
 }
