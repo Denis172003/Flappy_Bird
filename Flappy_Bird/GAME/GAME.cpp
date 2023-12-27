@@ -5,16 +5,21 @@
 #include "../PLAYER/PLAYER.h"
 #include "../EXCEPTIONS/EXCEPTIONS.h"
 
-Game::Game() {
+Game::Game()
+        : window(sf::VideoMode({800, 600}), "Flappy Bird", sf::Style::Default),
+          backgroundTexture(),
+          background(),
+          player(),
+          animation(&player.getTexture(), sf::Vector2u(3, 3), 0.2f),
+          obstacle(),
+          gameOverScreen(),
+          gameOver(false) {
 
-    animation = Player::Animation(&player.getTexture(), sf::Vector2u(3, 3), 0.2f);
-    window.create(sf::VideoMode({800, 600}), "Flappy Bird", sf::Style::Default);
     window.setTitle("Flappy Bird");
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
     backgroundTexture.loadFromFile("Assets/Background_fb.png");
     background.setTexture(backgroundTexture);
-    gameOver = false;
 }
 
 Game::~Game() {
@@ -71,9 +76,7 @@ void Game::run() {
     }
 
     if (gameOver) {
-        window.clear();
-        gameOverScreen.draw(window);
-        window.display();
+        displayGameOverScreen();
         sf::sleep(sf::seconds(2));
     }
 }
@@ -105,4 +108,10 @@ std::ostream &operator<<(std::ostream &out, const Game &game) {
 
 void Game::handleGameOver() {
     gameOver = true;
+}
+
+void Game::displayGameOverScreen() {
+    window.clear();
+    gameOverScreen.draw(window);
+    window.display();
 }

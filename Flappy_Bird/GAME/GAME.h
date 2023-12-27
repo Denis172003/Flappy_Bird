@@ -27,6 +27,8 @@ private:
 
     void handleEvents();
     void handleGameOver();
+
+    void displayGameOverScreen();
 };
 
 #endif

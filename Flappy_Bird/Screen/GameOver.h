@@ -14,7 +14,7 @@ public:
 
     void init();
     void draw(sf::RenderWindow& window);
-    sf::Sprite getSprite() { return sprite; }
+    sf::Sprite getSprite() const { return sprite; }
 };
 
 #endif // GAME_OVER_H
