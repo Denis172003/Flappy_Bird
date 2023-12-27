@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include "../OBSTACLES/OBSTACLES.h"
 #include "../PLAYER/PLAYER.h"
-#include "../COLLISION/COLLISION.h"
 #include "../Screen/GameOver.h"
 
 class Game {
@@ -20,10 +19,12 @@ private:
     sf::Sprite background;
     Player player;
     Player::Animation animation;
-    Obstacle obstacle;
+    Obstacle obstacle1;
+    Obstacle obstacle2;
+    Obstacle obstacle3;
+    Obstacle obstacle4;
     GameOver gameOverScreen;
     bool gameOver;
-
 
     void handleEvents();
     void handleGameOver();

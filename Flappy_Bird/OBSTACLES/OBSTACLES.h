@@ -19,10 +19,10 @@ public:
 
     void update();
     void die();
+    void setPosition(float x, float y);
 
     const sf::Sprite& getSprite() const { return sprite; }
 
-    void reset();
 };
 
 #endif // OOP_OBSTACLES_H

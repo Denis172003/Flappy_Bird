@@ -6,12 +6,15 @@
 #include "../EXCEPTIONS/EXCEPTIONS.h"
 
 Game::Game()
-        : window(sf::VideoMode({800, 600}), "Flappy Bird", sf::Style::Default),
+        : window(sf::VideoMode(800, 600), "Flappy Bird", sf::Style::Default),
           backgroundTexture(),
           background(),
           player(),
           animation(&player.getTexture(), sf::Vector2u(3, 3), 0.2f),
-          obstacle(),
+          obstacle1(),
+          obstacle2(),
+          obstacle3(),
+          obstacle4(),
           gameOverScreen(),
           gameOver(false) {
 
@@ -20,7 +23,12 @@ Game::Game()
     window.setFramerateLimit(60);
     backgroundTexture.loadFromFile("Assets/Background_fb.png");
     background.setTexture(backgroundTexture);
+    //obstacle1.setPosition(700.0f, -100.0f);
+    //obstacle2.setPosition(700.0f, -200.0f);
+//    obstacle3.setPosition(700.0f, -100.0f);
+//    obstacle4.setPosition(700.0f, -100.0f);
 }
+
 
 Game::~Game() {
     std::cout << "Game destructor\n";
@@ -37,17 +45,30 @@ void Game::run() {
 
             handleEvents();
             float deltaTime = clock.restart().asSeconds();
-
             elapsedTime = timer.getElapsedTime();
 
-            if (!player.getHasJumped())
+            if (!player.getHasJumped()) {
                 player.Update(0, 0.0f);
-            else
+            } else {
                 player.Update(0, deltaTime);
+            }
             player.setTextureRect();
+            player.update(obstacle1, window);
 
-            player.update(obstacle, window);
-            obstacle.update();
+            obstacle1.update();
+            window.draw(obstacle1.getSprite());
+
+            obstacle2.update();
+            window.draw(obstacle2.getSprite());
+
+
+            obstacle3.update();
+            window.draw(obstacle3.getSprite());
+
+
+            obstacle4.update();
+            window.draw(obstacle4.getSprite());
+
 
             Position playerPosition = player.getposition().getPosition();
             playerPosition.setX(player.getSprite().getPosition().x);
@@ -60,7 +81,6 @@ void Game::run() {
             }
 
             window.draw(player.getSprite());
-            window.draw(obstacle.getSprite());
             window.display();
 
         } catch (const BirdCollisionException &e) {
@@ -74,7 +94,6 @@ void Game::run() {
             handleGameOver();
         }
     }
-
 }
 
 void Game::handleEvents() {
@@ -145,4 +164,8 @@ void Game::restart() {
     backgroundTexture.loadFromFile("Assets/Background_fb.png");
     background.setTexture(backgroundTexture);
     gameOver = false;
+    obstacle1.die();
+//    obstacle2.die();
+//    obstacle3.die();
+//    obstacle4.die();
 }

@@ -4,10 +4,10 @@
 Obstacle::Obstacle()
         : texture(),
           sprite(),
-          velocity({-2.2f, 0.0f}) {
+          velocity({-2.5f, 0.0f}) {
     texture.loadFromFile("Assets/PIPES.png");
     sprite.setTexture(texture);
-    sprite.setPosition({700.0f, -100.0f});
+    sprite.setPosition({0.0f, 0.0f});
 }
 
 Obstacle::~Obstacle() {
@@ -32,16 +32,15 @@ std::ostream& operator<<(std::ostream& out, const Obstacle& obstacle) {
 void Obstacle::update() {
     sprite.move(velocity);
 
-    if (sprite.getPosition().x < -1.0f)
+    if (sprite.getPosition().x < -100.0f)
         die();
 }
 
 void Obstacle::die() {
-    sf::Vector2f startPosition(700.0f, -100.0f);
+    sf::Vector2f startPosition(800.0f, -100.0f);
     sprite.setPosition(startPosition);
 }
 
-void Obstacle::reset() {
-    sf::Vector2f startPosition(700.0f, -100.0f);
-    sprite.setPosition(startPosition);
+void Obstacle::setPosition(float x, float y) {
+    sprite.setPosition(sf::Vector2f(x, y));
 }
