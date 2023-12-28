@@ -9,6 +9,8 @@ Game::Game()
         : window(sf::VideoMode(800, 600), "Flappy Bird", sf::Style::Default),
           backgroundTexture(),
           background(),
+          whitebgTexture(),
+          whitebg(),
           player(),
           animation(&player.getTexture(), sf::Vector2u(3, 3), 0.2f),
           obstacle1(),
@@ -23,6 +25,11 @@ Game::Game()
     window.setFramerateLimit(60);
     backgroundTexture.loadFromFile("Assets/Background_fb.png");
     background.setTexture(backgroundTexture);
+    whitebgTexture.loadFromFile("Assets/WhiteBGLowOp.png");
+    whitebg.setTexture(whitebgTexture);
+
+
+
     //obstacle1.setPosition(700.0f, -100.0f);
     //obstacle2.setPosition(700.0f, -200.0f);
 //    obstacle3.setPosition(700.0f, -100.0f);
@@ -57,6 +64,7 @@ void Game::run() {
 
             obstacle1.update();
             window.draw(obstacle1.getSprite());
+            //player.update(obstacle2, window);
 
             obstacle2.update();
             window.draw(obstacle2.getSprite());
@@ -129,12 +137,38 @@ std::ostream &operator<<(std::ostream &out, const Game &game) {
 void Game::handleGameOver() {
     gameOver = true;
 
-    window.clear();
-    window.draw(background);
-    window.display();
 
-    gameOverScreen.draw(window);
-    window.display();
+    sf::Clock timer;
+    bool whitebgDrawn = false;
+
+    while (window.isOpen()) {
+        sf::Event event{};
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+        }
+
+        float elapsedSeconds = timer.getElapsedTime().asSeconds();
+
+        if (elapsedSeconds < 0.3 && !whitebgDrawn) {
+            window.draw(whitebg);
+            whitebgDrawn = true;
+        }
+
+        sf::sleep(sf::seconds(0.1));
+
+        if (elapsedSeconds >= 0.3) {
+            gameOverScreen.draw(window);
+        }
+
+        window.display();
+
+        if (elapsedSeconds >= 0.3) {
+            break;
+        }
+    }
+
 
 
     sf::Event event{};
@@ -143,7 +177,7 @@ void Game::handleGameOver() {
             window.close();
             break;
         } else if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::Space || event.key.code == sf::Keyboard::R) {
+            if (event.key.code == sf::Keyboard::R) {
                 restart();
                 break;
             }
@@ -165,7 +199,7 @@ void Game::restart() {
     background.setTexture(backgroundTexture);
     gameOver = false;
     obstacle1.die();
-//    obstacle2.die();
+    obstacle2.die();
 //    obstacle3.die();
 //    obstacle4.die();
 }

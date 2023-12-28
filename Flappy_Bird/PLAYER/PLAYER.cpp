@@ -105,7 +105,7 @@ void Player::die()
 
 
 void Player::checkcollision(const Obstacle& obstacle, sf::RenderWindow& window) {
-    if(sprite.getPosition().y > 520.0f || sprite.getPosition().y < -40.0f ) {
+    if (sprite.getPosition().y > 520.0f || sprite.getPosition().y < -40.0f) {
         die();
         throw BirdOutOfScreenException();
     }
@@ -115,22 +115,18 @@ void Player::checkcollision(const Obstacle& obstacle, sf::RenderWindow& window) 
     float stateWidth = birdBounds.width / 3 - 57;
     float stateHeight = birdBounds.height / 3 - 80;
 
-    sf::FloatRect realBirdBounds(birdBounds.left + 29, birdBounds.top+40, stateWidth, stateHeight);
+    sf::FloatRect realBirdBounds(birdBounds.left + 29, birdBounds.top + 40, stateWidth, stateHeight);
 
     sf::FloatRect upperObstacleBounds(obstacle.getSprite().getPosition().x, obstacle.getSprite().getPosition().y, obstacle.getSprite().getGlobalBounds().width - 2, obstacle.getSprite().getGlobalBounds().height / 2 - 72);
-    sf::FloatRect lowerObstacleBounds(obstacle.getSprite().getPosition().x, obstacle.getSprite().getPosition().y + obstacle.getSprite().getGlobalBounds().height / 2 + 72, obstacle.getSprite().getGlobalBounds().width -2 , obstacle.getSprite().getGlobalBounds().height / 2);
+    sf::FloatRect lowerObstacleBounds(obstacle.getSprite().getPosition().x, obstacle.getSprite().getPosition().y + obstacle.getSprite().getGlobalBounds().height / 2 + 72, obstacle.getSprite().getGlobalBounds().width - 2, obstacle.getSprite().getGlobalBounds().height / 2);
 
     bool showHitboxes;
 
-
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::H)) {
         showHitboxes = true;
-    }
-    else {
+    } else {
         showHitboxes = false;
     }
-
-
 
     if (showHitboxes) {
         sf::RectangleShape birdBox(sf::Vector2f(realBirdBounds.width, realBirdBounds.height));

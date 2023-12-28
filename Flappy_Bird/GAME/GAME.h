@@ -17,6 +17,8 @@ private:
     sf::RenderWindow window;
     sf::Texture backgroundTexture;
     sf::Sprite background;
+    sf::Texture whitebgTexture;
+    sf::Sprite whitebg;
     Player player;
     Player::Animation animation;
     Obstacle obstacle1;
