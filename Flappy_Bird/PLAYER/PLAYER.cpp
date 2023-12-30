@@ -1,3 +1,4 @@
+#pragma once
 #include "PLAYER.h"
 #include <iostream>
 #include "../EXCEPTIONS/EXCEPTIONS.h"
@@ -96,12 +97,19 @@ void Rotation::updateRotation(float velocity) {
 }
 
 
-void Player::die()
-{
+void Player::die() {
     hasJumped = false;
+    isFalling = true;
+
+
+    velocity.y += GRAVITY;
+    sprite.move(velocity);
+
+    isFalling = false;
     sf::Vector2f startPosition(100.0f, 300.0f);
     sprite.setPosition(startPosition);
 }
+
 
 
 void Player::checkcollision(const Obstacle& obstacle, sf::RenderWindow& window) {
@@ -164,12 +172,19 @@ void Player::setPos(Position pos) {
 }
 
 void Player::update(const Obstacle& obstacle, sf::RenderWindow& window) {
-    handleKeys();
-    handleGravity();
-    checkcollision(obstacle, window);
-    rotation.updateRotation(velocity.y);
-    sprite.move(velocity);
+
+    if (isFalling) {
+        handleGravity();
+        sprite.move(velocity);
+    } else {
+        handleKeys();
+        handleGravity();
+        checkcollision(obstacle, window);
+        rotation.updateRotation(velocity.y);
+        sprite.move(velocity);
+    }
 }
+
 
 void Player::setTextureRect() {
     texture.loadFromFile("Assets/Animation_Bird.png", this->uvRect);

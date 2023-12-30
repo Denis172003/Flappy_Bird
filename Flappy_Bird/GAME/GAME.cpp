@@ -1,8 +1,8 @@
+#pragma once
 #include "GAME.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
-#include "../PLAYER/PLAYER.h"
 #include "../EXCEPTIONS/EXCEPTIONS.h"
 
 Game::Game()

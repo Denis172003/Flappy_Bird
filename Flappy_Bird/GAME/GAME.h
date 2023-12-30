@@ -1,6 +1,6 @@
 #ifndef OOP_GAME_H
 #define OOP_GAME_H
-
+#pragma once
 #include <SFML/Graphics.hpp>
 #include "../OBSTACLES/OBSTACLES.h"
 #include "../PLAYER/PLAYER.h"

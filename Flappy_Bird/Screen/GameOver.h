@@ -1,6 +1,6 @@
 #ifndef GAME_OVER_H
 #define GAME_OVER_H
-
+#pragma once
 #include <SFML/Graphics.hpp>
 
 class GameOver {
@@ -15,7 +15,6 @@ public:
     void init();
     void draw(sf::RenderWindow& window);
 
-    sf::Sprite getSprite(){ return sprite;};
 };
 
 #endif // GAME_OVER_H

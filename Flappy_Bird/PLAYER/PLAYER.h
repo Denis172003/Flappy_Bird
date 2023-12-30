@@ -1,3 +1,4 @@
+#pragma once
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include "../OBSTACLES/OBSTACLES.h"
@@ -77,6 +78,7 @@ private:
     Rotation rotation;
     Position position;
     bool hasJumped = false;
+    bool isFalling = false;
     sf::Texture texture;
     sf::Sprite sprite;
     sf::Vector2f velocity;

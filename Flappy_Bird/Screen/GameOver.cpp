@@ -1,4 +1,4 @@
-// GameOver.cpp
+#pragma once
 #include <iostream>
 #include "GameOver.h"
 

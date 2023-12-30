@@ -1,7 +1,7 @@
 #ifndef OOP_OBSTACLES_H
 #define OOP_OBSTACLES_H
 
-
+#pragma once
 #include <SFML/Graphics.hpp>
 
 class Obstacle {
