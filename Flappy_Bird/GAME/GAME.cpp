@@ -43,7 +43,7 @@ Game::~Game() {
 
 void Game::run() {
     sf::Clock clock, timer;
-    sf::Time elapsedTime;
+    sf::Time elapsedTime1;
 
     while (window.isOpen()) {
         try {
@@ -52,7 +52,7 @@ void Game::run() {
 
             handleEvents();
             float deltaTime = clock.restart().asSeconds();
-            elapsedTime = timer.getElapsedTime();
+            elapsedTime1 = timer.getElapsedTime();
 
             if (!player.getHasJumped()) {
                 player.Update(0, 0.0f);
@@ -83,7 +83,7 @@ void Game::run() {
             playerPosition.setY(player.getSprite().getPosition().y);
             player.setPos(playerPosition);
 
-            if (player.getHasJumped() && elapsedTime.asSeconds() >= 1.0) {
+            if (player.getHasJumped() && elapsedTime1.asSeconds() >= 1.0) {
                 std::cout << player << std::endl;
                 timer.restart();
             }
@@ -137,7 +137,7 @@ std::ostream &operator<<(std::ostream &out, const Game &game) {
 void Game::handleGameOver() {
     gameOver = true;
 
-    sf::Clock timer;
+    sf::Clock timer1;
     sf::Time elapsedTime;
     bool whitebgDrawn = false;
 
@@ -149,22 +149,23 @@ void Game::handleGameOver() {
             }
         }
 
-        elapsedTime = timer.getElapsedTime();
+        elapsedTime = timer1.getElapsedTime();
+        float sec = elapsedTime.asSeconds();
 
-        if (elapsedTime.asSeconds() < 0.3 && !whitebgDrawn) {
+        if (sec < 0.3f && !whitebgDrawn) {
             window.draw(whitebg);
             whitebgDrawn = true;
         }
 
         sf::sleep(sf::seconds(0.1));
 
-        if (elapsedTime.asSeconds() >= 0.3) {
+        if (sec >= 0.3f) {
             gameOverScreen.draw(window);
         }
 
         window.display();
 
-        if (elapsedTime.asSeconds() >= 0.3) {
+        if (sec >= 0.3f) {
             break;
         }
     }
