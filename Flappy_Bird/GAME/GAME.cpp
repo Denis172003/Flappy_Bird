@@ -158,13 +158,13 @@ void Game::handleGameOver() {
 
         sf::sleep(sf::seconds(0.1));
 
-        if (elapsedSeconds >= 0.3) {
+        if (elapsedSeconds >= 0.3f) {
             gameOverScreen.draw(window);
         }
 
         window.display();
 
-        if (elapsedSeconds >= 0.3) {
+        if (elapsedSeconds >= 0.3f) {
             break;
         }
     }
