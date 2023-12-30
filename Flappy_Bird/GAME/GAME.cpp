@@ -138,6 +138,7 @@ void Game::handleGameOver() {
     gameOver = true;
 
     sf::Clock timer;
+    sf::Time elapsedTime;
     bool whitebgDrawn = false;
 
     while (window.isOpen()) {
@@ -148,22 +149,22 @@ void Game::handleGameOver() {
             }
         }
 
-        float elapsedSeconds = static_cast<float>(timer.getElapsedTime().asSeconds());
+        elapsedTime = timer.getElapsedTime();
 
-        if (elapsedSeconds < 0.3f && !whitebgDrawn) {
+        if (elapsedTime.asSeconds() < 0.3f && !whitebgDrawn) {
             window.draw(whitebg);
             whitebgDrawn = true;
         }
 
         sf::sleep(sf::seconds(0.1));
 
-        if (elapsedSeconds >= 0.3f) {
+        if (elapsedTime.asSeconds() >= 0.3f) {
             gameOverScreen.draw(window);
         }
 
         window.display();
 
-        if (elapsedSeconds >= 0.3f) {
+        if (elapsedTime.asSeconds() >= 0.3f) {
             break;
         }
     }
@@ -186,6 +187,7 @@ void Game::handleGameOver() {
         }
     }
 }
+
 
 
 void Game::restart() {
