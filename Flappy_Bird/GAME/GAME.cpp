@@ -151,20 +151,20 @@ void Game::handleGameOver() {
 
         elapsedTime = timer.getElapsedTime();
 
-        if (elapsedTime.asSeconds() < 0.3f && !whitebgDrawn) {
+        if (elapsedTime.asSeconds() < 0.3 && !whitebgDrawn) {
             window.draw(whitebg);
             whitebgDrawn = true;
         }
 
         sf::sleep(sf::seconds(0.1));
 
-        if (elapsedTime.asSeconds() >= 0.3f) {
+        if (elapsedTime.asSeconds() >= 0.3) {
             gameOverScreen.draw(window);
         }
 
         window.display();
 
-        if (elapsedTime.asSeconds() >= 0.3f) {
+        if (elapsedTime.asSeconds() >= 0.3) {
             break;
         }
     }
