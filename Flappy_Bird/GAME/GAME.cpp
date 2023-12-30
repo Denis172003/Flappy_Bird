@@ -137,7 +137,6 @@ std::ostream &operator<<(std::ostream &out, const Game &game) {
 void Game::handleGameOver() {
     gameOver = true;
 
-
     sf::Clock timer;
     bool whitebgDrawn = false;
 
@@ -149,27 +148,25 @@ void Game::handleGameOver() {
             }
         }
 
-        double elapsedSeconds = timer.getElapsedTime().asSeconds();
+        float elapsedSeconds = static_cast<float>(timer.getElapsedTime().asSeconds());
 
-        if (elapsedSeconds < 0.3 && !whitebgDrawn) {
+        if (elapsedSeconds < 0.3f && !whitebgDrawn) {
             window.draw(whitebg);
             whitebgDrawn = true;
         }
 
         sf::sleep(sf::seconds(0.1));
 
-        if (elapsedSeconds >= 0.3) {
+        if (elapsedSeconds >= 0.3f) {
             gameOverScreen.draw(window);
         }
 
         window.display();
 
-        if (elapsedSeconds >= 0.3) {
+        if (elapsedSeconds >= 0.3f) {
             break;
         }
     }
-
-
 
     sf::Event event{};
     while (window.waitEvent(event)) {
@@ -189,6 +186,7 @@ void Game::handleGameOver() {
         }
     }
 }
+
 
 void Game::restart() {
     window.create(sf::VideoMode({800, 600}), "Flappy Bird", sf::Style::Default);
