@@ -151,7 +151,7 @@ void Game::handleGameOver() {
 
         float elapsedSeconds = timer.getElapsedTime().asSeconds();
 
-        if (elapsedSeconds < 0.3 && !whitebgDrawn) {
+        if (elapsedSeconds < 0.3f && !whitebgDrawn) {
             window.draw(whitebg);
             whitebgDrawn = true;
         }
