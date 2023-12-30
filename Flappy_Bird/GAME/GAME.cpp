@@ -157,7 +157,7 @@ void Game::handleGameOver() {
             whitebgDrawn = true;
         }
 
-        sf::sleep(sf::seconds(0.1));
+        sf::sleep(sf::seconds(0.1f));
 
         if (sec >= 0.3f) {
             gameOverScreen.draw(window);
