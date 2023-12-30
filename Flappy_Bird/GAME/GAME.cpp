@@ -149,22 +149,22 @@ void Game::handleGameOver() {
             }
         }
 
-        float elapsedSeconds = timer.getElapsedTime().asSeconds();
+        double elapsedSeconds = timer.getElapsedTime().asSeconds();
 
-        if (elapsedSeconds < 0.3f && !whitebgDrawn) {
+        if (elapsedSeconds < 0.3 && !whitebgDrawn) {
             window.draw(whitebg);
             whitebgDrawn = true;
         }
 
         sf::sleep(sf::seconds(0.1));
 
-        if (elapsedSeconds >= 0.3f) {
+        if (elapsedSeconds >= 0.3) {
             gameOverScreen.draw(window);
         }
 
         window.display();
 
-        if (elapsedSeconds >= 0.3f) {
+        if (elapsedSeconds >= 0.3) {
             break;
         }
     }
@@ -203,3 +203,4 @@ void Game::restart() {
 //    obstacle3.die();
 //    obstacle4.die();
 }
+
