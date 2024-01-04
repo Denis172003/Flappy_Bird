@@ -92,7 +92,7 @@ public:
     ~Player();
     Player& operator=(const Player& player);
     Player(const Player& player);
-    friend std::ostream& operator<<(std::ostream & out, const Player& player);
+    friend std::ostream& operator<<(std::ostream& out, const Player& player);
 
 
 public:
@@ -125,10 +125,6 @@ public:
         return texture;
     }
 
-//    void setTexture(const sf::Texture& newTexture) {
-//        texture = newTexture;
-//        sprite.setTexture(newTexture);
-//    }
 
     sf::Sprite getSprite() { return sprite; }
 

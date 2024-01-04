@@ -23,11 +23,20 @@ Game::Game()
     window.setTitle("Flappy Bird");
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
-    backgroundTexture.loadFromFile("Assets/Background_fb.png");
-    background.setTexture(backgroundTexture);
-    whitebgTexture.loadFromFile("Assets/WhiteBGLowOp.png");
-    whitebg.setTexture(whitebgTexture);
 
+    try {
+        if (!backgroundTexture.loadFromFile("Assets/Background_fb.png")) {
+            throw std::runtime_error("Failed to load background texture");
+        }
+
+        background.setTexture(backgroundTexture);
+        whitebgTexture.loadFromFile("Assets/WhiteBGLowOp.png");
+        whitebg.setTexture(whitebgTexture);
+
+    } catch (const std::runtime_error &e) {
+        std::cerr << e.what() << std::endl;
+        handleGameOver();
+    }
 
 
     //obstacle1.setPosition(700.0f, -100.0f);
@@ -64,19 +73,15 @@ void Game::run() {
 
             obstacle1.update();
             window.draw(obstacle1.getSprite());
-            //player.update(obstacle2, window);
 
             obstacle2.update();
             window.draw(obstacle2.getSprite());
 
-
             obstacle3.update();
             window.draw(obstacle3.getSprite());
 
-
             obstacle4.update();
             window.draw(obstacle4.getSprite());
-
 
             Position playerPosition = player.getposition().getPosition();
             playerPosition.setX(player.getSprite().getPosition().x);
@@ -99,6 +104,9 @@ void Game::run() {
             handleGameOver();
         } catch (const GameOverException &e) {
             std::cout << e.what() << std::endl;
+            handleGameOver();
+        } catch (const std::exception &e) {
+            std::cerr << "Unexpected exception: " << e.what() << std::endl;
             handleGameOver();
         }
     }

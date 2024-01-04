@@ -5,8 +5,11 @@
 class FlappyBirdException : public std::exception {
 private:
     std::string message;
+
 public:
     explicit FlappyBirdException() : message("FlappyBirdException occurred") {}
+
+    ~FlappyBirdException() noexcept override = default;
 
     [[nodiscard]] const char* what() const noexcept override {
         return message.c_str();
@@ -15,7 +18,6 @@ public:
     void setMessage(const std::string& message1) {
         this->message = message1;
     }
-
 };
 
 class BirdCollisionException : public FlappyBirdException {
