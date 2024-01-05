@@ -3,6 +3,7 @@
 
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <stdexcept>
 
 class Obstacle {
 private:
@@ -23,6 +24,18 @@ public:
 
     const sf::Sprite& getSprite() const { return sprite; }
 
+};
+
+class ObstacleTextureLoadException : public std::runtime_error {
+public:
+    explicit ObstacleTextureLoadException(const std::string& message)
+            : std::runtime_error(message) {}
+};
+
+class ObstacleInvalidPositionException : public std::runtime_error {
+public:
+    explicit ObstacleInvalidPositionException(const std::string& message)
+            : std::runtime_error(message) {}
 };
 
 #endif // OOP_OBSTACLES_H

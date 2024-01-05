@@ -1,14 +1,23 @@
-
 #include "OBSTACLES.h"
 #include <iostream>
+
 
 Obstacle::Obstacle()
         : texture(),
           sprite(),
           velocity({-2.5f, 0.0f}) {
-    texture.loadFromFile("Assets/PIPES.png");
-    sprite.setTexture(texture);
-    sprite.setPosition({0.0f, 0.0f});
+
+    try {
+        if (!texture.loadFromFile("Assets/PIPES.png")) {
+            throw ObstacleTextureLoadException("Failed to load obstacle texture");
+        }
+
+        sprite.setTexture(texture);
+        sprite.setPosition({800.0f, -100.0f});
+
+    } catch (const ObstacleTextureLoadException& e) {
+        std::cerr << e.what() << std::endl;
+    }
 }
 
 Obstacle::~Obstacle() {
@@ -43,5 +52,9 @@ void Obstacle::die() {
 }
 
 void Obstacle::setPosition(float x, float y) {
+    if (x < 0.0f || y < 0.0f) {
+        throw ObstacleInvalidPositionException("Invalid position for obstacle");
+    }
+
     sprite.setPosition(sf::Vector2f(x, y));
 }
