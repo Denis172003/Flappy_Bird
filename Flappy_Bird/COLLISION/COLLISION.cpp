@@ -1,4 +1,4 @@
-#include "Collision.h"
+#include "COLLISION.h"
 #include "../EXCEPTIONS/EXCEPTIONS.h"
 
 void Collision::checkPlayerCollision(const sf::Sprite& playerSprite, sf::RenderWindow& window) {
