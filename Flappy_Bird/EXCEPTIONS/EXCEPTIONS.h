@@ -7,36 +7,25 @@ private:
     std::string message;
 
 public:
-    explicit FlappyBirdException() : message("FlappyBirdException occurred") {}
-
+    explicit FlappyBirdException();
     ~FlappyBirdException() noexcept override = default;
 
-    [[nodiscard]] const char* what() const noexcept override {
-        return message.c_str();
-    }
+    [[nodiscard]] const char* what() const noexcept override;
 
-    void setMessage(const std::string& message1) {
-        this->message = message1;
-    }
+    void setMessage(const std::string& message1);
 };
 
 class BirdCollisionException : public FlappyBirdException {
 public:
-    explicit BirdCollisionException() : FlappyBirdException() {
-        setMessage("BirdCollisionException occurred");
-    }
+    explicit BirdCollisionException();
 };
 
 class BirdOutOfScreenException : public FlappyBirdException {
 public:
-    explicit BirdOutOfScreenException() : FlappyBirdException() {
-        setMessage("BirdOutOfScreenException occurred");
-    }
+    explicit BirdOutOfScreenException();
 };
 
 class GameOverException : public FlappyBirdException {
 public:
-    explicit GameOverException() : FlappyBirdException() {
-        setMessage("GameOverException occurred");
-    }
+    explicit GameOverException();
 };
