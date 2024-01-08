@@ -134,8 +134,8 @@ void Game::handleEvents() {
                 default:
                     break;
             }
-        } catch (const FlappyBirdException& e) {
-            std::cerr << "Exception during event handling: " << e.what() << std::endl;
+        } catch (const FlappyBirdException& e1) {
+            std::cerr << "Exception during event handling: " << e1.what() << std::endl;
             handleGameOver();
         }
     }
