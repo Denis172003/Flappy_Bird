@@ -1,8 +1,10 @@
 
 #include "EXCEPTIONS.h"
 
-FlappyBirdException::FlappyBirdException(const std::string& customMessage)
-        : message(customMessage) {}
+#include <utility>
+
+FlappyBirdException::FlappyBirdException(std::string  customMessage)
+        : message(std::move(customMessage)) {}
 
 const char* FlappyBirdException::what() const noexcept {
     return message.c_str();
@@ -10,9 +12,6 @@ const char* FlappyBirdException::what() const noexcept {
 
 WindowClosedException::WindowClosedException()
         : FlappyBirdException("Window was closed during event handling") {}
-
-InvalidInputException::InvalidInputException(const std::string& input)
-        : FlappyBirdException("Invalid input received: " + input) {}
 
 RestartFailedException::RestartFailedException()
         : FlappyBirdException("Failed to restart the game") {}

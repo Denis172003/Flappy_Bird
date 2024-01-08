@@ -8,8 +8,8 @@
 
 class FlappyBirdException : public std::exception {
 public:
-    FlappyBirdException(const std::string& customMessage);
-    const char* what() const noexcept override;
+    explicit FlappyBirdException(std::string  customMessage);
+    [[nodiscard]] const char* what() const noexcept override;
 
 protected:
     std::string message;
@@ -18,11 +18,6 @@ protected:
 class WindowClosedException : public FlappyBirdException {
 public:
     WindowClosedException();
-};
-
-class InvalidInputException : public FlappyBirdException {
-public:
-    InvalidInputException(const std::string& input);
 };
 
 class RestartFailedException : public FlappyBirdException {
