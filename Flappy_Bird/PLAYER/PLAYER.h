@@ -95,12 +95,12 @@ public:
 
 
 public:
-    void update(const Obstacle &obstacle, sf::RenderWindow &window, sf::Event &e);
+    void update(const Obstacle &obstacle, sf::RenderWindow &window, const sf::Event &e);
     void handleKeys();
     void handleGravity();
     void jump();
     void die();
-    void checkcollision(const Obstacle &obstacle, sf::RenderWindow &window, sf::Event &e);
+    void checkcollision(const Obstacle &obstacle, sf::RenderWindow &window, const sf::Event &e);
     void setTextureRect();
     void setPos(Position pos);
 

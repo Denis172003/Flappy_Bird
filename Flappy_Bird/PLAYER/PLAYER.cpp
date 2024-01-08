@@ -105,7 +105,7 @@ void Player::die() {
     sprite.setPosition(startPosition);
 }
 
-void Player::checkcollision(const Obstacle& obstacle, sf::RenderWindow& window, sf::Event& e) {
+void Player::checkcollision(const Obstacle& obstacle, sf::RenderWindow& window,const sf::Event& e) {
 
     if (sprite.getPosition().y > 520.0f || sprite.getPosition().y < -40.0f) {
         die();
@@ -121,7 +121,7 @@ void Player::setPos(Position pos) {
     position.setY(pos.getY());
 }
 
-void Player::update(const Obstacle& obstacle, sf::RenderWindow& window, sf::Event& e) {
+void Player::update(const Obstacle& obstacle, sf::RenderWindow& window, const sf::Event& e) {
 
     if (isFalling) {
         handleGravity();
