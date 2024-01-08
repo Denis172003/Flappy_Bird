@@ -66,7 +66,7 @@ void Collision::checkObstacleCollision(const sf::Sprite& playerSprite, const Obs
     }
 }
 
-void Collision::updateHitboxDisplay(sf::Event& e) {
+void Collision::updateHitboxDisplay(const sf::Event& e) {
     if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::H) {
         showHitboxes = !showHitboxes;
     }
