@@ -1,25 +1,27 @@
 
-
 #include "EXCEPTIONS.h"
 
-FlappyBirdException::FlappyBirdException() : message("FlappyBirdException occurred") {}
+FlappyBirdException::FlappyBirdException(const std::string& customMessage)
+        : message(customMessage) {}
 
 const char* FlappyBirdException::what() const noexcept {
     return message.c_str();
 }
 
-void FlappyBirdException::setMessage(const std::string& message1) {
-    this->message = message1;
-}
+WindowClosedException::WindowClosedException()
+        : FlappyBirdException("Window was closed during event handling") {}
 
-BirdCollisionException::BirdCollisionException() : FlappyBirdException() {
-    setMessage("BirdCollisionException occurred");
-}
+InvalidInputException::InvalidInputException(const std::string& input)
+        : FlappyBirdException("Invalid input received: " + input) {}
 
-BirdOutOfScreenException::BirdOutOfScreenException() : FlappyBirdException() {
-    setMessage("BirdOutOfScreenException occurred");
-}
+RestartFailedException::RestartFailedException()
+        : FlappyBirdException("Failed to restart the game") {}
 
-GameOverException::GameOverException() : FlappyBirdException() {
-    setMessage("GameOverException occurred");
-}
+BirdCollisionException::BirdCollisionException()
+        : FlappyBirdException("BirdCollisionException occurred") {}
+
+BirdOutOfScreenException::BirdOutOfScreenException()
+        : FlappyBirdException("BirdOutOfScreenException occurred") {}
+
+GameOverException::GameOverException()
+        : FlappyBirdException("GameOverException occurred") {}

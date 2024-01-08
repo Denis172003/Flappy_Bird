@@ -1,8 +1,6 @@
-//#include <chrono>
-//#include <thread>
+
 #include "./Flappy_Bird/OBSTACLES/OBSTACLES.h"
 #include "./Flappy_Bird/GAME/GAME.h"
-#include "./Flappy_Bird/PLAYER/PLAYER.h"
 
 #ifdef __linux__
 #include <X11/Xlib.h>

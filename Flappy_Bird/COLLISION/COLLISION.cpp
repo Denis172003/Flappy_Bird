@@ -1,6 +1,8 @@
 #include "COLLISION.h"
 #include "../EXCEPTIONS/EXCEPTIONS.h"
 
+bool showHitboxes = false;
+
 void Collision::checkPlayerCollision(const sf::Sprite& playerSprite, sf::RenderWindow& window) {
 
     sf::FloatRect birdBounds = playerSprite.getGlobalBounds();
@@ -9,8 +11,6 @@ void Collision::checkPlayerCollision(const sf::Sprite& playerSprite, sf::RenderW
     float stateHeight = birdBounds.height / 3 - 80;
 
     sf::FloatRect realBirdBounds(birdBounds.left + 29, birdBounds.top + 40, stateWidth, stateHeight);
-
-    bool showHitboxes = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::H);
 
     if (showHitboxes) {
         sf::RectangleShape birdBox(sf::Vector2f(realBirdBounds.width, realBirdBounds.height));
@@ -23,7 +23,7 @@ void Collision::checkPlayerCollision(const sf::Sprite& playerSprite, sf::RenderW
     }
 }
 
-void Collision::checkObstacleCollision(const sf::Sprite& playerSprite, const Obstacle& obstacle, sf::RenderWindow& window) {
+void Collision::checkObstacleCollision(const sf::Sprite& playerSprite, const Obstacle& obstacle, sf::RenderWindow& window,sf::Event& e) {
     sf::FloatRect birdBounds = playerSprite.getGlobalBounds();
 
     float stateWidth = birdBounds.width / 3 - 57;
@@ -39,8 +39,6 @@ void Collision::checkObstacleCollision(const sf::Sprite& playerSprite, const Obs
                                       obstacle.getSprite().getPosition().y + obstacle.getSprite().getGlobalBounds().height / 2 + 72,
                                       obstacle.getSprite().getGlobalBounds().width - 2,
                                       obstacle.getSprite().getGlobalBounds().height / 2);
-
-    bool showHitboxes = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::H);
 
     if (showHitboxes) {
         sf::RectangleShape upperObstacleBox(sf::Vector2f(upperObstacleBounds.width, upperObstacleBounds.height));
@@ -59,7 +57,17 @@ void Collision::checkObstacleCollision(const sf::Sprite& playerSprite, const Obs
         window.draw(lowerObstacleBox);
     }
 
+    updateHitboxDisplay(e);
+
     if (realBirdBounds.intersects(upperObstacleBounds) || realBirdBounds.intersects(lowerObstacleBounds)) {
-        throw BirdCollisionException();
+        if (!showHitboxes) {
+            throw BirdCollisionException();
+        }
+    }
+}
+
+void Collision::updateHitboxDisplay(sf::Event& e) {
+    if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::H) {
+        showHitboxes = !showHitboxes;
     }
 }

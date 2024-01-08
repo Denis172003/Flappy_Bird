@@ -1,31 +1,48 @@
-#pragma once
-#include <exception>
+// EXCEPTIONS.h
+
+#ifndef EXCEPTIONS_H
+#define EXCEPTIONS_H
+
+#include <stdexcept>
 #include <string>
 
 class FlappyBirdException : public std::exception {
-private:
-    std::string message;
-
 public:
-    explicit FlappyBirdException();
-    ~FlappyBirdException() noexcept override = default;
+    FlappyBirdException(const std::string& customMessage);
+    const char* what() const noexcept override;
 
-    [[nodiscard]] const char* what() const noexcept override;
+protected:
+    std::string message;
+};
 
-    void setMessage(const std::string& message1);
+class WindowClosedException : public FlappyBirdException {
+public:
+    WindowClosedException();
+};
+
+class InvalidInputException : public FlappyBirdException {
+public:
+    InvalidInputException(const std::string& input);
+};
+
+class RestartFailedException : public FlappyBirdException {
+public:
+    RestartFailedException();
 };
 
 class BirdCollisionException : public FlappyBirdException {
 public:
-    explicit BirdCollisionException();
+    BirdCollisionException();
 };
 
 class BirdOutOfScreenException : public FlappyBirdException {
 public:
-    explicit BirdOutOfScreenException();
+    BirdOutOfScreenException();
 };
 
 class GameOverException : public FlappyBirdException {
 public:
-    explicit GameOverException();
+    GameOverException();
 };
+
+#endif // EXCEPTIONS_H

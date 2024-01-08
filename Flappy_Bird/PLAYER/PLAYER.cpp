@@ -105,7 +105,7 @@ void Player::die() {
     sprite.setPosition(startPosition);
 }
 
-void Player::checkcollision(const Obstacle& obstacle, sf::RenderWindow& window) {
+void Player::checkcollision(const Obstacle& obstacle, sf::RenderWindow& window, sf::Event& e) {
 
     if (sprite.getPosition().y > 520.0f || sprite.getPosition().y < -40.0f) {
         die();
@@ -113,7 +113,7 @@ void Player::checkcollision(const Obstacle& obstacle, sf::RenderWindow& window) 
     }
 
     Collision::checkPlayerCollision(sprite, window);
-    Collision::checkObstacleCollision(sprite, obstacle, window);
+    Collision::checkObstacleCollision(sprite, obstacle, window, e);
 }
 
 void Player::setPos(Position pos) {
@@ -121,7 +121,7 @@ void Player::setPos(Position pos) {
     position.setY(pos.getY());
 }
 
-void Player::update(const Obstacle& obstacle, sf::RenderWindow& window) {
+void Player::update(const Obstacle& obstacle, sf::RenderWindow& window, sf::Event& e) {
 
     if (isFalling) {
         handleGravity();
@@ -129,7 +129,7 @@ void Player::update(const Obstacle& obstacle, sf::RenderWindow& window) {
     } else {
         handleKeys();
         handleGravity();
-        checkcollision(obstacle, window);
+        checkcollision(obstacle, window, e);
         rotation.updateRotation(velocity.y);
         sprite.move(velocity);
     }

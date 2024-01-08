@@ -69,7 +69,8 @@ void Game::run() {
                 player.Update(0, deltaTime);
             }
             player.setTextureRect();
-            player.update(obstacle1, window);
+            sf::Event e = sf::Event();
+            player.update(obstacle1, window, e);
 
             obstacle1.update();
             window.draw(obstacle1.getSprite());
@@ -96,17 +97,17 @@ void Game::run() {
             window.draw(player.getSprite());
             window.display();
 
-        } catch (const BirdCollisionException &e) {
+        } catch (const BirdCollisionException& e) {
             std::cout << e.what() << std::endl;
             handleGameOver();
-        } catch (const BirdOutOfScreenException &e) {
+        } catch (const BirdOutOfScreenException& e) {
             std::cout << e.what() << std::endl;
             handleGameOver();
-        } catch (const GameOverException &e) {
+        } catch (const GameOverException& e) {
             std::cout << e.what() << std::endl;
             handleGameOver();
-        } catch (const std::exception &e) {
-            std::cerr << "Unexpected exception: " << e.what() << std::endl;
+        } catch (const std::exception& e) {
+            std::cerr << "Unexpected exception during game loop: " << e.what() << std::endl;
             handleGameOver();
         }
     }
@@ -115,24 +116,27 @@ void Game::run() {
 void Game::handleEvents() {
     sf::Event e = sf::Event();
     while (window.pollEvent(e)) {
-        switch (e.type) {
-            case sf::Event::Closed:
-                window.close();
-                break;
-            case sf::Event::Resized:
-                std::cout << "New width: " << window.getSize().x << '\n'
-                          << "New height: " << window.getSize().y << '\n';
-                break;
-            case sf::Event::KeyPressed:
-                if (e.key.code == sf::Keyboard::Space || e.key.code == sf::Keyboard::R) {
-                    if (gameOver) {
-                        restart();
+        try {
+            switch (e.type) {
+                case sf::Event::Closed:
+                    throw WindowClosedException();
+                case sf::Event::Resized:
+                    std::cout << "New width: " << window.getSize().x << '\n'
+                              << "New height: " << window.getSize().y << '\n';
+                    break;
+                case sf::Event::KeyPressed:
+                    if (e.key.code == sf::Keyboard::Space || e.key.code == sf::Keyboard::R) {
+                        if (gameOver) {
+                            restart();
+                        }
                     }
-                }
-                std::cout << "Received key " << (e.key.code == sf::Keyboard::X ? "X" : "(other)") << "\n";
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
+        } catch (const FlappyBirdException& e) {
+            std::cerr << "Exception during event handling: " << e.what() << std::endl;
+            handleGameOver();
         }
     }
 }
@@ -200,16 +204,23 @@ void Game::handleGameOver() {
 
 
 void Game::restart() {
-    window.create(sf::VideoMode({800, 600}), "Flappy Bird", sf::Style::Default);
-    window.setTitle("Flappy Bird");
-    window.setVerticalSyncEnabled(true);
-    window.setFramerateLimit(60);
-    backgroundTexture.loadFromFile("Assets/Background_fb.png");
-    background.setTexture(backgroundTexture);
-    gameOver = false;
-    obstacle1.die();
-    obstacle2.die();
-//    obstacle3.die();
-//    obstacle4.die();
+    try {
+        window.create(sf::VideoMode({800, 600}), "Flappy Bird", sf::Style::Default);
+        window.setTitle("Flappy Bird");
+        window.setVerticalSyncEnabled(true);
+        window.setFramerateLimit(60);
+        if (!backgroundTexture.loadFromFile("Assets/Background_fb.png")) {
+            throw std::runtime_error("Failed to load background texture");
+        }
+        background.setTexture(backgroundTexture);
+        gameOver = false;
+        obstacle1.die();
+        obstacle2.die();
+        //    obstacle3.die();
+        //    obstacle4.die();
+    } catch (const FlappyBirdException& e) {
+        std::cerr << "Exception during restart: " << e.what() << std::endl;
+        throw RestartFailedException();
+    }
 }
 
