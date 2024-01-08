@@ -69,8 +69,8 @@ void Game::run() {
                 player.Update(0, deltaTime);
             }
             player.setTextureRect();
-            sf::Event e = sf::Event();
-            player.update(obstacle1, window, e);
+            sf::Event e1 = sf::Event();
+            player.update(obstacle1, window, e1);
 
             obstacle1.update();
             window.draw(obstacle1.getSprite());
