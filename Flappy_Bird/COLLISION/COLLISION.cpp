@@ -23,7 +23,7 @@ void Collision::checkPlayerCollision(const sf::Sprite& playerSprite, sf::RenderW
     }
 }
 
-void Collision::checkObstacleCollision(const sf::Sprite& playerSprite, const Obstacle& obstacle, sf::RenderWindow& window,sf::Event& e) {
+void Collision::checkObstacleCollision(const sf::Sprite& playerSprite, const Obstacle& obstacle, sf::RenderWindow& window,const sf::Event& e) {
     sf::FloatRect birdBounds = playerSprite.getGlobalBounds();
 
     float stateWidth = birdBounds.width / 3 - 57;

@@ -12,7 +12,7 @@ class Collision {
         static void updateHitboxDisplay(const sf::Event &e);
 
 
-    static void checkObstacleCollision(const sf::Sprite &playerSprite, const Obstacle &obstacle, sf::RenderWindow &window,sf::Event &e);
+    static void checkObstacleCollision(const sf::Sprite &playerSprite, const Obstacle &obstacle, sf::RenderWindow &window,const sf::Event &e);
 };
 
 
