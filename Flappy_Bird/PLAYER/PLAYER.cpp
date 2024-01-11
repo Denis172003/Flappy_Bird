@@ -9,12 +9,18 @@ Player::Player()
           sprite(),
           velocity({0.0f, 0.0f})
 {
+    try {
+        if (!texture.loadFromFile("Assets/Animation_Bird.png")) {
+            throw PlayerTextureLoadException("Failed to load player texture");
+        }
 
-    texture.loadFromFile("Assets/Animation_Bird.png");
-    sprite.setTexture(texture);
-    sprite.setPosition({100.0f, 300.0f});
-    updateUvRect(&texture);
-    //sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
+        sprite.setTexture(texture);
+        sprite.setPosition({100.0f, 300.0f});
+        updateUvRect(&texture);
+
+    } catch (const PlayerTextureLoadException& e) {
+        std::cerr << e.what() << std::endl;
+    }
 }
 
 Player::~Player() {
@@ -30,7 +36,7 @@ Player& Player::operator=(const Player &player) {
     return *this;
 }
 
-Player::Player(const Player& player)
+ Player::Player(const Player& player)
         : Animation(player), texture(player.texture), sprite(player.sprite), velocity(player.velocity) {
 }
 

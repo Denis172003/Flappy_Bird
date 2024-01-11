@@ -39,6 +39,7 @@ Game::Game()
     }
 
 
+
     //obstacle1.setPosition(700.0f, -100.0f);
     //obstacle2.setPosition(700.0f, -200.0f);
 //    obstacle3.setPosition(700.0f, -100.0f);
