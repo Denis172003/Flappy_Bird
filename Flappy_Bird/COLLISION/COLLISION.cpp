@@ -64,6 +64,7 @@ void Collision::checkObstacleCollision(const sf::Sprite& playerSprite, const Obs
             throw BirdCollisionException();
         }
     }
+
 }
 
 void Collision::updateHitboxDisplay(const sf::Event& e) {
