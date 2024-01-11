@@ -26,16 +26,5 @@ public:
 
 };
 
-class ObstacleTextureLoadException : public std::runtime_error {
-public:
-    explicit ObstacleTextureLoadException(const std::string& message)
-            : std::runtime_error(message) {}
-};
-
-class ObstacleInvalidPositionException : public std::runtime_error {
-public:
-    explicit ObstacleInvalidPositionException(const std::string& message)
-            : std::runtime_error(message) {}
-};
 
 #endif // OOP_OBSTACLES_H

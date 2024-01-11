@@ -24,3 +24,9 @@ BirdOutOfScreenException::BirdOutOfScreenException()
 
 GameOverException::GameOverException()
         : FlappyBirdException("GameOverException occurred") {}
+
+ObstacleTextureLoadException::ObstacleTextureLoadException(const std::string& message)
+        : FlappyBirdException(message) {}
+
+ObstacleInvalidPositionException::ObstacleInvalidPositionException(const std::string& message)
+        : FlappyBirdException(message) {}

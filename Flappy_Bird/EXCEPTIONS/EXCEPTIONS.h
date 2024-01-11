@@ -8,7 +8,7 @@
 
 class FlappyBirdException : public std::exception {
 public:
-    explicit FlappyBirdException(std::string  customMessage);
+    explicit FlappyBirdException(std::string customMessage);
     [[nodiscard]] const char* what() const noexcept override;
 
 protected:
@@ -38,6 +38,17 @@ public:
 class GameOverException : public FlappyBirdException {
 public:
     GameOverException();
+};
+
+// Add the Obstacle-specific exceptions here
+class ObstacleTextureLoadException : public FlappyBirdException {
+public:
+    explicit ObstacleTextureLoadException(const std::string& message);
+};
+
+class ObstacleInvalidPositionException : public FlappyBirdException {
+public:
+    explicit ObstacleInvalidPositionException(const std::string& message);
 };
 
 #endif // EXCEPTIONS_H

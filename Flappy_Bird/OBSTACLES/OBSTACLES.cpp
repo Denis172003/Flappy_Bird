@@ -1,6 +1,9 @@
-#include "OBSTACLES.h"
-#include <iostream>
+// OBSTACLES.cpp
 
+#include "OBSTACLES.h"
+#include "../EXCEPTIONS/EXCEPTIONS.h"
+
+#include <iostream>
 
 Obstacle::Obstacle()
         : texture(),
@@ -58,3 +61,4 @@ void Obstacle::setPosition(float x, float y) {
 
     sprite.setPosition(sf::Vector2f(x, y));
 }
+
