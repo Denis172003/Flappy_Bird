@@ -71,7 +71,7 @@ public:
 
 };
 
-class Player: public Animation {
+class Player: public GameObject, public Animation {
 private:
 
     Rotation rotation;
@@ -91,7 +91,7 @@ public:
     ~Player();
     Player& operator=(const Player& player);
 
-    [[maybe_unused]] Player(const Player& player);
+    Player(const Player& player);
     friend std::ostream& operator<<(std::ostream& out, const Player& player);
 
 

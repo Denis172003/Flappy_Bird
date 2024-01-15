@@ -4,8 +4,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <stdexcept>
+#include "../ObjectFactory/GameObject.h"
 
-class Obstacle {
+
+class Obstacle: public GameObject{
 private:
     sf::Texture texture;
     sf::Sprite sprite;
@@ -15,7 +17,7 @@ public:
     Obstacle();
     ~Obstacle();
     Obstacle& operator=(const Obstacle& obstacle);
-    Obstacle(const Obstacle& obstacle) = default;
+    Obstacle(const Obstacle& obstacle);
     friend std::ostream& operator<<(std::ostream& out, const Obstacle& obstacle);
 
     void update();

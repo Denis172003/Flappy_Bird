@@ -2,7 +2,6 @@
 
 #include "OBSTACLES.h"
 #include "../EXCEPTIONS/EXCEPTIONS.h"
-
 #include <iostream>
 
 Obstacle::Obstacle()
@@ -25,6 +24,10 @@ Obstacle::Obstacle()
 
 Obstacle::~Obstacle() {
     std::cout << "Obstacle destructor\n";
+}
+
+Obstacle::Obstacle(const Obstacle &obstacle): texture(obstacle.texture), sprite(obstacle.sprite), velocity(obstacle.velocity) {
+
 }
 
 Obstacle& Obstacle::operator=(const Obstacle& obstacle) {
@@ -61,4 +64,6 @@ void Obstacle::setPosition(float x, float y) {
 
     sprite.setPosition(sf::Vector2f(x, y));
 }
+
+
 
