@@ -1,9 +1,10 @@
-
 #include "GAME.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include "../EXCEPTIONS/EXCEPTIONS.h"
+
+const int NUM_OBSTACLES = 4; // Adjust the number of obstacles as needed
 
 Game::Game()
         : window(sf::VideoMode(800, 600), "Flappy Bird", sf::Style::Default),
@@ -13,10 +14,7 @@ Game::Game()
           whitebg(),
           player(),
           animation(&player.getTexture(), sf::Vector2u(3, 3), 0.2f),
-          obstacle1(),
-          obstacle2(),
-          obstacle3(),
-          obstacle4(),
+          obstacles(),
           gameOverScreen(),
           gameOver(false) {
 
@@ -33,19 +31,12 @@ Game::Game()
         whitebgTexture.loadFromFile("Assets/WhiteBGLowOp.png");
         whitebg.setTexture(whitebgTexture);
 
-    } catch (const std::runtime_error &e) {
+
+    } catch (const std::runtime_error& e) {
         std::cerr << e.what() << std::endl;
         handleGameOver();
     }
-
-
-
-    //obstacle1.setPosition(700.0f, -100.0f);
-    //obstacle2.setPosition(700.0f, -200.0f);
-//    obstacle3.setPosition(700.0f, -100.0f);
-//    obstacle4.setPosition(700.0f, -100.0f);
 }
-
 
 Game::~Game() {
     std::cout << "Game destructor\n";
@@ -61,6 +52,7 @@ void Game::run() {
             window.draw(background);
 
             handleEvents();
+
             float deltaTime = clock.restart().asSeconds();
             elapsedTime1 = timer.getElapsedTime();
 
@@ -70,20 +62,24 @@ void Game::run() {
                 player.Update(0, deltaTime);
             }
             player.setTextureRect();
-            sf::Event e1 = sf::Event();
-            player.update(obstacle1, window, e1);
 
-            obstacle1.update();
-            window.draw(obstacle1.getSprite());
 
-            obstacle2.update();
-            window.draw(obstacle2.getSprite());
+            if (obstacles.empty()) {
+                for (int i = 0; i < NUM_OBSTACLES; i++) {
+                    auto* obstacle = new Obstacle();
+                    obstacles.push_back(obstacle);
+                }
+            }
 
-            obstacle3.update();
-            window.draw(obstacle3.getSprite());
+            for (auto& obstacle : obstacles) {
+                obstacle->update();
+                window.draw(obstacle->getSprite());
+                player.checkcollision(*obstacle);
+                player.update(obstacle, deltaTime);
 
-            obstacle4.update();
-            window.draw(obstacle4.getSprite());
+            }
+
+
 
             Position playerPosition = player.getposition().getPosition();
             playerPosition.setX(player.getSprite().getPosition().x);
@@ -114,6 +110,7 @@ void Game::run() {
     }
 }
 
+
 void Game::handleEvents() {
     sf::Event e = sf::Event();
     while (window.pollEvent(e)) {
@@ -142,7 +139,7 @@ void Game::handleEvents() {
     }
 }
 
-std::ostream &operator<<(std::ostream &out, const Game &game) {
+std::ostream& operator<<(std::ostream& out, const Game& game) {
     out << "Window size: " << game.window.getSize().x << "x" << game.window.getSize().y << "\n";
     return out;
 }
@@ -202,8 +199,6 @@ void Game::handleGameOver() {
     }
 }
 
-
-
 void Game::restart() {
     try {
         window.create(sf::VideoMode({800, 600}), "Flappy Bird", sf::Style::Default);
@@ -215,13 +210,13 @@ void Game::restart() {
         }
         background.setTexture(backgroundTexture);
         gameOver = false;
-        obstacle1.die();
-        obstacle2.die();
-        //    obstacle3.die();
-        //    obstacle4.die();
+
+        for (auto& obstacle : obstacles) {
+            obstacle->die();
+        }
+
     } catch (const FlappyBirdException& e) {
         std::cerr << "Exception during restart: " << e.what() << std::endl;
         throw RestartFailedException();
     }
 }
-

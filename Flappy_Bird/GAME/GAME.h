@@ -21,10 +21,7 @@ private:
     sf::Sprite whitebg;
     Player player;
     Player::Animation animation;
-    Obstacle obstacle1;
-    Obstacle obstacle2;
-    Obstacle obstacle3;
-    Obstacle obstacle4;
+    std::vector<Obstacle*> obstacles;
     GameOver gameOverScreen;
     bool gameOver;
 

@@ -111,15 +111,15 @@ void Player::die() {
     sprite.setPosition(startPosition);
 }
 
-void Player::checkcollision(const Obstacle& obstacle, sf::RenderWindow& window,const sf::Event& e) {
+void Player::checkcollision(const Obstacle& obstacle) {
 
     if (sprite.getPosition().y > 520.0f || sprite.getPosition().y < -40.0f) {
         die();
         throw BirdOutOfScreenException();
     }
 
-    Collision::checkPlayerCollision(sprite, window);
-    Collision::checkObstacleCollision(sprite, obstacle, window, e);
+    Collision::checkPlayerCollision(sprite);
+    Collision::checkObstacleCollision(sprite, obstacle);
 }
 
 void Player::setPos(Position pos) {
@@ -127,23 +127,23 @@ void Player::setPos(Position pos) {
     position.setY(pos.getY());
 }
 
-void Player::update(const Obstacle& obstacle, sf::RenderWindow& window, const sf::Event& e) {
-
+void Player::update(const Obstacle* obstacle, float deltaTime) {
     if (isFalling) {
         handleGravity();
-        sprite.move(velocity);
+        sprite.move(velocity * deltaTime);
     } else {
         handleKeys();
         handleGravity();
-        checkcollision(obstacle, window, e);
+        checkcollision(*obstacle);
         rotation.updateRotation(velocity.y);
-        sprite.move(velocity);
+        sprite.move(velocity * deltaTime*15.0f);
     }
 }
 
 void Player::setTextureRect() {
     texture.loadFromFile("Assets/Animation_Bird.png", this->uvRect);
 }
+
 
 void Animation::updateUvRect(const sf::Texture* texture_) {
     if (texture_ == nullptr) return;

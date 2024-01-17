@@ -65,5 +65,18 @@ void Obstacle::setPosition(float x, float y) {
     sprite.setPosition(sf::Vector2f(x, y));
 }
 
+Obstacle::Obstacle(Obstacle&& obstacle) noexcept
+        : texture(obstacle.texture),
+          sprite(std::move(obstacle.sprite)),
+          velocity(obstacle.velocity) {
+}
 
+Obstacle& Obstacle::operator=(Obstacle&& obstacle) noexcept {
+    if (this != &obstacle) {
+        texture = obstacle.texture;
+        sprite = std::move(obstacle.sprite);
+        velocity = obstacle.velocity;
+    }
+    return *this;
+}
 

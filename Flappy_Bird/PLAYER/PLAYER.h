@@ -71,7 +71,7 @@ public:
 
 };
 
-class Player: public GameObject, public Animation {
+class Player: public Animation {
 private:
 
     Rotation rotation;
@@ -96,12 +96,12 @@ public:
 
 
 public:
-    void update(const Obstacle &obstacle, sf::RenderWindow &window, const sf::Event &e);
+    void update(const Obstacle *obstacle, float deltaTime);
     void handleKeys();
     void handleGravity();
     void jump();
     void die();
-    void checkcollision(const Obstacle &obstacle, sf::RenderWindow &window, const sf::Event &e);
+    void checkcollision(const Obstacle &obstacle);
     void setTextureRect();
     void setPos(Position pos);
 
@@ -127,6 +127,7 @@ public:
 
 
     sf::Sprite getSprite() { return sprite; }
+
 
 
 };
