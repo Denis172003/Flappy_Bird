@@ -6,6 +6,7 @@
 
 const int NUM_OBSTACLES = 4;
 const float FAST_OBSTACLE_SPAWN_INTERVAL = 10.0f;
+const float FAST_OBSTACLE_DELETE_INTERVAL = 15.0f;
 
 Game::Game()
         : window(sf::VideoMode(800, 600), "Flappy Bird", sf::Style::Default),
@@ -117,10 +118,37 @@ void Game::run() {
     }
 }
 
+
 void Game::spawnFastObstacle() {
-    auto* fastObstacle = new FastObstacle();
-    obstacles.push_back(fastObstacle);
+    static sf::Clock fastObstacleTimer;
+    static bool waitingForSpawn = false;
+
+    if (!waitingForSpawn) {
+        sf::Time elapsedTimeFastObstacle = fastObstacleTimer.getElapsedTime();
+
+        if (obstacles.empty()) {
+            for (int i = 0; i < NUM_OBSTACLES; i++) {
+                auto* obstacle = new Obstacle();
+                obstacles.push_back(obstacle);
+            }
+        }
+
+        if (elapsedTimeFastObstacle.asSeconds() >= FAST_OBSTACLE_DELETE_INTERVAL) {
+            if (obstacles.back()->getSprite().getPosition().x < 800.0f) {
+                auto* fastObstacle = new FastObstacle();
+                obstacles.push_back(fastObstacle);
+                waitingForSpawn = true;
+                fastObstacleTimer.restart();
+            }
+        }
+    } else {
+        sf::Time elapsedTimeWaiting = fastObstacleTimer.getElapsedTime();
+        if (elapsedTimeWaiting.asSeconds() >= 15.0f) {
+            waitingForSpawn = false;
+        }
+    }
 }
+
 
 
 void Game::handleEvents() {
