@@ -4,7 +4,8 @@
 #include <iostream>
 #include "../EXCEPTIONS/EXCEPTIONS.h"
 
-const int NUM_OBSTACLES = 4; // Adjust the number of obstacles as needed
+const int NUM_OBSTACLES = 4;
+const float FAST_OBSTACLE_SPAWN_INTERVAL = 10.0f;
 
 Game::Game()
         : window(sf::VideoMode(800, 600), "Flappy Bird", sf::Style::Default),
@@ -43,8 +44,8 @@ Game::~Game() {
 }
 
 void Game::run() {
-    sf::Clock clock, timer;
-    sf::Time elapsedTime1;
+    sf::Clock clock, timer, fastObstacleTimer;
+    sf::Time elapsedTime1,elapsedTimeFastObstacle;
 
     while (window.isOpen()) {
         try {
@@ -69,6 +70,12 @@ void Game::run() {
                     auto* obstacle = new Obstacle();
                     obstacles.push_back(obstacle);
                 }
+            }
+
+            elapsedTimeFastObstacle = fastObstacleTimer.getElapsedTime();
+            if (elapsedTimeFastObstacle.asSeconds() >= FAST_OBSTACLE_SPAWN_INTERVAL) {
+                spawnFastObstacle();
+                fastObstacleTimer.restart();
             }
 
             for (auto& obstacle : obstacles) {
@@ -108,6 +115,11 @@ void Game::run() {
             handleGameOver();
         }
     }
+}
+
+void Game::spawnFastObstacle() {
+    auto* fastObstacle = new FastObstacle();
+    obstacles.push_back(fastObstacle);
 }
 
 

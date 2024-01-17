@@ -25,6 +25,7 @@ private:
     GameOver gameOverScreen;
     bool gameOver;
 
+    void spawnFastObstacle();
     void handleEvents();
     void handleGameOver();
     void restart();

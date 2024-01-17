@@ -6,29 +6,16 @@
 #include <stdexcept>
 
 
-class BaseObstacle {
-public:
-    virtual BaseObstacle& operator=(const BaseObstacle& baseobstacle) = delete;
-    virtual ~BaseObstacle() = default;
-};
-
-class SQUAREObstacle: public BaseObstacle{
-public:
-
-    SQUAREObstacle& operator=(const SQUAREObstacle& squareObstacle) = delete;
-
-};
-
 
 class Obstacle{
-private:
+protected:
     sf::Texture texture;
     sf::Sprite sprite;
     sf::Vector2f velocity;
 
 public:
     Obstacle();
-    ~Obstacle();
+    virtual ~Obstacle();
     Obstacle& operator=(const Obstacle& obstacle);
     Obstacle(const Obstacle& obstacle);
     friend std::ostream& operator<<(std::ostream& out, const Obstacle& obstacle);
@@ -36,14 +23,25 @@ public:
     Obstacle& operator=(Obstacle&&) noexcept;
 
 
-    void update();
-    void die();
+    virtual void update();
+    virtual void die();
     void setPosition(float x, float y);
 
 
-    const sf::Sprite& getSprite() const { return sprite; }
+    virtual const sf::Sprite& getSprite() const { return sprite; }
 
 };
+
+class FastObstacle: public Obstacle{
+public:
+
+    FastObstacle& operator=(const FastObstacle& fastobstacle) = delete;
+    void update()override;
+    void die()override;
+    const sf::Sprite& getSprite() const override  { return sprite; }
+
+};
+
 
 
 #endif // OOP_OBSTACLES_H
