@@ -113,31 +113,20 @@ void Game::throwOnTextureLoad(const std::string& textureName, sf::Texture& textu
 
 void Game::spawnFastObstacle() {
     static sf::Clock fastObstacleTimer;
-    static bool waitingForSpawn = false;
 
     try {
-        if (!waitingForSpawn) {
-            sf::Time elapsedTimeFastObstacle = fastObstacleTimer.getElapsedTime();
-
-            if (obstacles.empty()) {
-                for (int i = 0; i < NUM_OBSTACLES; i++) {
-                    auto* obstacle = new Obstacle();
-                    obstacles.push_back(obstacle);
-                }
+        sf::Time elapsedTimeFastObstacle = fastObstacleTimer.getElapsedTime();
+        if (obstacles.empty()) {
+            for (int i = 0; i < NUM_OBSTACLES; i++) {
+                auto *obstacle = new Obstacle();
+                obstacles.push_back(obstacle);
             }
-
-            if (elapsedTimeFastObstacle.asSeconds() >= FAST_OBSTACLE_DELETE_INTERVAL) {
-                if (obstacles.back()->getSprite().getPosition().x < 800.0f) {
-                    auto* fastObstacle = new FastObstacle();
-                    obstacles.push_back(fastObstacle);
-                    waitingForSpawn = true;
-                    fastObstacleTimer.restart();
-                }
-            }
-        } else {
-            sf::Time elapsedTimeWaiting = fastObstacleTimer.getElapsedTime();
-            if (elapsedTimeWaiting.asSeconds() >= 15.0f) {
-                waitingForSpawn = false;
+        }
+        if (elapsedTimeFastObstacle.asSeconds() >= FAST_OBSTACLE_DELETE_INTERVAL) {
+            if (obstacles.back()->getSprite().getPosition().x < 800.0f) {
+                auto *fastObstacle = new FastObstacle();
+                obstacles.push_back(fastObstacle);
+                fastObstacleTimer.restart();
             }
         }
     } catch (const ObstacleTextureLoadException& e) {
