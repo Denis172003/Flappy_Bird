@@ -5,10 +5,12 @@
 
 Player::Player()
         : Animation(nullptr, sf::Vector2u(3, 3), 0.15f),
+          hasJumped(false),
+          isFalling(false),
           texture(),
           sprite(),
-          velocity({0.0f, 0.0f})
-{
+          velocity({0.0f, 0.0f}) {
+
     try {
         if (!texture.loadFromFile("Assets/Animation_Bird.png")) {
             throw PlayerTextureLoadException("Failed to load player texture");
@@ -22,6 +24,7 @@ Player::Player()
         std::cerr << e.what() << std::endl;
     }
 }
+
 
 Player::~Player() {
     std::cout << "Player destructor\n";
@@ -132,11 +135,15 @@ void Player::update(const Obstacle* obstacle, float deltaTime) {
         handleGravity();
         sprite.move(velocity * deltaTime);
     } else {
-        handleKeys();
-        handleGravity();
-        checkcollision(*obstacle);
-        rotation.updateRotation(velocity.y);
-        sprite.move(velocity * deltaTime*15.0f);
+        try {
+            handleKeys();
+            handleGravity();
+            checkcollision(*obstacle);
+            rotation.updateRotation(velocity.y);
+            sprite.move(velocity * deltaTime * 15.0f);
+        } catch (const PlayerTextureLoadException& e) {
+            std::cerr << e.what() << std::endl;
+        }
     }
 }
 

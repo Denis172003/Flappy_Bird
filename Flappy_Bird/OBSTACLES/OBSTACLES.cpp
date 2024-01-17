@@ -9,18 +9,14 @@ Obstacle::Obstacle()
           sprite(),
           velocity({-2.5f, 0.0f}) {
 
-    try {
-        if (!texture.loadFromFile("Assets/PIPES.png")) {
-            throw ObstacleTextureLoadException("Failed to load obstacle texture");
-        }
-
-        sprite.setTexture(texture);
-        sprite.setPosition({800.0f, -100.0f});
-
-    } catch (const ObstacleTextureLoadException& e) {
-        std::cerr << e.what() << std::endl;
+    if (!texture.loadFromFile("Assets/PIPES.png")) {
+        throw ObstacleTextureLoadException("Failed to load obstacle texture");
     }
+
+    sprite.setTexture(texture);
+    sprite.setPosition({800.0f, -100.0f});
 }
+
 
 Obstacle::~Obstacle() {
     std::cout << "Obstacle destructor\n";
@@ -46,12 +42,16 @@ std::ostream& operator<<(std::ostream& out, const Obstacle& obstacle) {
 }
 
 void Obstacle::update() {
-    sprite.move(velocity);
+    try {
+        sprite.move(velocity);
 
-    if (sprite.getPosition().x < -100.0f)
-        die();
+        if (sprite.getPosition().x < -100.0f)
+            die();
+    } catch (const ObstacleTextureLoadException& e) {
+        std::cerr << e.what() << std::endl;
+
+    }
 }
-
 
 
 void FastObstacle::update() {
