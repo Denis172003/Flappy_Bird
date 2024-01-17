@@ -29,6 +29,8 @@ private:
     void handleEvents();
     void handleGameOver();
     void restart();
+
+    static void throwOnTextureLoad(const std::string &textureName, sf::Texture &texture, const std::string &filePath);
 };
 
 #endif

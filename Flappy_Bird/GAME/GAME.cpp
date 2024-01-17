@@ -24,32 +24,24 @@ Game::Game()
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
 
-    try {
-        if (!backgroundTexture.loadFromFile("Assets/Background_fb.png")) {
-            throw std::runtime_error("Failed to load background texture");
-        }
+    throwOnTextureLoad("Background", backgroundTexture, "Assets/Background_fb.png");
+    background.setTexture(backgroundTexture);
 
-        background.setTexture(backgroundTexture);
-        whitebgTexture.loadFromFile("Assets/WhiteBGLowOp.png");
-        whitebg.setTexture(whitebgTexture);
-
-
-    } catch (const std::runtime_error& e) {
-        std::cerr << e.what() << std::endl;
-        handleGameOver();
-    }
+    throwOnTextureLoad("White Background", whitebgTexture, "Assets/WhiteBGLowOp.png");
+    whitebg.setTexture(whitebgTexture);
 }
 
 Game::~Game() {
     std::cout << "Game destructor\n";
 }
 
+
 void Game::run() {
     sf::Clock clock, timer, fastObstacleTimer;
-    sf::Time elapsedTime1,elapsedTimeFastObstacle;
+    sf::Time elapsedTime1, elapsedTimeFastObstacle;
 
-    while (window.isOpen()) {
-        try {
+    try {
+        while (window.isOpen()) {
             window.clear();
             window.draw(background);
 
@@ -64,7 +56,6 @@ void Game::run() {
                 player.Update(0, deltaTime);
             }
             player.setTextureRect();
-
 
             if (obstacles.empty()) {
                 for (int i = 0; i < NUM_OBSTACLES; i++) {
@@ -84,10 +75,7 @@ void Game::run() {
                 window.draw(obstacle->getSprite());
                 player.checkcollision(*obstacle);
                 player.update(obstacle, deltaTime);
-
             }
-
-
 
             Position playerPosition = player.getposition().getPosition();
             playerPosition.setX(player.getSprite().getPosition().x);
@@ -101,53 +89,69 @@ void Game::run() {
 
             window.draw(player.getSprite());
             window.display();
-
-        } catch (const BirdCollisionException& e) {
-            std::cout << e.what() << std::endl;
-            handleGameOver();
-        } catch (const BirdOutOfScreenException& e) {
-            std::cout << e.what() << std::endl;
-            handleGameOver();
-        } catch (const GameOverException& e) {
-            std::cout << e.what() << std::endl;
-            handleGameOver();
-        } catch (const std::exception& e) {
-            std::cerr << "Unexpected exception during game loop: " << e.what() << std::endl;
-            handleGameOver();
         }
+    } catch (const BirdCollisionException& e) {
+        std::cerr << "Bird collision exception: " << e.what() << std::endl;
+        handleGameOver();
+    } catch (const GameOverException& e) {
+        std::cerr << "Game over exception: " << e.what() << std::endl;
+        handleGameOver();
+    } catch (const WindowClosedException& e) {
+        std::cerr << "Window closed exception: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Unexpected exception during game loop: " << e.what() << std::endl;
+        handleGameOver();
     }
 }
 
+
+void Game::throwOnTextureLoad(const std::string& textureName, sf::Texture& texture, const std::string& filePath) {
+    if (!texture.loadFromFile(filePath)) {
+        throw FlappyBirdException("Failed to load " + textureName + " texture");
+    }
+}
 
 void Game::spawnFastObstacle() {
     static sf::Clock fastObstacleTimer;
     static bool waitingForSpawn = false;
 
-    if (!waitingForSpawn) {
-        sf::Time elapsedTimeFastObstacle = fastObstacleTimer.getElapsedTime();
+    try {
+        if (!waitingForSpawn) {
+            sf::Time elapsedTimeFastObstacle = fastObstacleTimer.getElapsedTime();
 
-        if (obstacles.empty()) {
-            for (int i = 0; i < NUM_OBSTACLES; i++) {
-                auto* obstacle = new Obstacle();
-                obstacles.push_back(obstacle);
+            if (obstacles.empty()) {
+                for (int i = 0; i < NUM_OBSTACLES; i++) {
+                    auto* obstacle = new Obstacle();
+                    obstacles.push_back(obstacle);
+                }
+            }
+
+            if (elapsedTimeFastObstacle.asSeconds() >= FAST_OBSTACLE_DELETE_INTERVAL) {
+                if (obstacles.back()->getSprite().getPosition().x < 800.0f) {
+                    auto* fastObstacle = new FastObstacle();
+                    obstacles.push_back(fastObstacle);
+                    waitingForSpawn = true;
+                    fastObstacleTimer.restart();
+                }
+            }
+        } else {
+            sf::Time elapsedTimeWaiting = fastObstacleTimer.getElapsedTime();
+            if (elapsedTimeWaiting.asSeconds() >= 15.0f) {
+                waitingForSpawn = false;
             }
         }
+    } catch (const ObstacleTextureLoadException& e) {
+        std::cerr << "Obstacle texture load exception: " << e.what() << std::endl;
 
-        if (elapsedTimeFastObstacle.asSeconds() >= FAST_OBSTACLE_DELETE_INTERVAL) {
-            if (obstacles.back()->getSprite().getPosition().x < 800.0f) {
-                auto* fastObstacle = new FastObstacle();
-                obstacles.push_back(fastObstacle);
-                waitingForSpawn = true;
-                fastObstacleTimer.restart();
-            }
-        }
-    } else {
-        sf::Time elapsedTimeWaiting = fastObstacleTimer.getElapsedTime();
-        if (elapsedTimeWaiting.asSeconds() >= 15.0f) {
-            waitingForSpawn = false;
-        }
+    } catch (const ObstacleInvalidPositionException& e) {
+        std::cerr << "Obstacle invalid position exception: " << e.what() << std::endl;
+
+    } catch (const std::exception& e) {
+        std::cerr << "Unexpected exception during fast obstacle spawn: " << e.what() << std::endl;
+        handleGameOver();
     }
 }
+
 
 
 
@@ -159,7 +163,7 @@ void Game::handleEvents() {
                 case sf::Event::Closed:
                     throw WindowClosedException();
                 case sf::Event::Resized:
-                    std::cout << "New width: " << window.getSize().x << '\n'
+                    std::cout  << "New width: " << window.getSize().x << '\n'
                               << "New height: " << window.getSize().y << '\n';
                     break;
                 case sf::Event::KeyPressed:
@@ -240,25 +244,19 @@ void Game::handleGameOver() {
 }
 
 void Game::restart() {
-    try {
-        window.create(sf::VideoMode({800, 600}), "Flappy Bird", sf::Style::Default);
-        window.setTitle("Flappy Bird");
-        window.setVerticalSyncEnabled(true);
-        window.setFramerateLimit(60);
-        if (!backgroundTexture.loadFromFile("Assets/Background_fb.png")) {
-            throw std::runtime_error("Failed to load background texture");
-        }
-        background.setTexture(backgroundTexture);
-        gameOver = false;
+    window.create(sf::VideoMode({800, 600}), "Flappy Bird", sf::Style::Default);
+    window.setTitle("Flappy Bird");
+    window.setVerticalSyncEnabled(true);
+    window.setFramerateLimit(60);
 
-        for (auto& obstacle : obstacles) {
-            delete obstacle;
-        }
-        
-        obstacles.clear();
+    throwOnTextureLoad("Background", backgroundTexture, "Assets/Background_fb.png");
+    background.setTexture(backgroundTexture);
 
-    } catch (const FlappyBirdException& e) {
-        std::cerr << "Exception during restart: " << e.what() << std::endl;
-        throw RestartFailedException();
+    gameOver = false;
+
+    for (auto& obstacle : obstacles) {
+        delete obstacle;
     }
+
+    obstacles.clear();
 }

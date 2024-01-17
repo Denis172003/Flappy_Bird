@@ -42,15 +42,10 @@ std::ostream& operator<<(std::ostream& out, const Obstacle& obstacle) {
 }
 
 void Obstacle::update() {
-    try {
         sprite.move(velocity);
 
         if (sprite.getPosition().x < -100.0f)
             die();
-    } catch (const ObstacleTextureLoadException& e) {
-        std::cerr << e.what() << std::endl;
-
-    }
 }
 
 

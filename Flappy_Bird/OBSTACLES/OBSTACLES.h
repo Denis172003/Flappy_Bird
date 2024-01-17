@@ -37,7 +37,6 @@ class FastObstacle: public Obstacle{
 
 public:
 
-    FastObstacle& operator=(const FastObstacle& fastobstacle)= delete;
     void update()override;
     void die()override;
     const sf::Sprite& getSprite() const override  { return sprite; }
