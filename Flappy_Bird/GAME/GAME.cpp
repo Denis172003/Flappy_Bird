@@ -212,8 +212,10 @@ void Game::restart() {
         gameOver = false;
 
         for (auto& obstacle : obstacles) {
-            obstacle->die();
+            delete obstacle;
         }
+        
+        obstacles.clear();
 
     } catch (const FlappyBirdException& e) {
         std::cerr << "Exception during restart: " << e.what() << std::endl;

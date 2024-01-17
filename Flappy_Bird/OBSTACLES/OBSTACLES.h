@@ -6,6 +6,20 @@
 #include <stdexcept>
 
 
+class BaseObstacle {
+public:
+    virtual BaseObstacle& operator=(const BaseObstacle& baseobstacle) = delete;
+    virtual ~BaseObstacle() = default;
+};
+
+class SQUAREObstacle: public BaseObstacle{
+public:
+
+    SQUAREObstacle& operator=(const SQUAREObstacle& squareObstacle) = delete;
+
+};
+
+
 class Obstacle{
 private:
     sf::Texture texture;
