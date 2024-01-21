@@ -7,6 +7,8 @@
 const int NUM_OBSTACLES = 4;
 const float FAST_OBSTACLE_SPAWN_INTERVAL = 10.0f;
 const float FAST_OBSTACLE_DELETE_INTERVAL = 15.0f;
+const float SLOW_OBSTACLE_SPAWN_INTERVAL = 5.0f;
+const float SLOW_OBSTACLE_DELETE_INTERVAL = 10.0f;
 
 Game::Game()
         : window(sf::VideoMode(800, 600), "Flappy Bird", sf::Style::Default),
@@ -37,8 +39,8 @@ Game::~Game() {
 
 
 void Game::run() {
-    sf::Clock clock, timer, fastObstacleTimer;
-    sf::Time elapsedTime1, elapsedTimeFastObstacle;
+    sf::Clock clock, timer, fastObstacleTimer, slowObstacleTimer;
+    sf::Time elapsedTime1, elapsedTimeFastObstacle, elapsedTimeSlowObstacle;
 
     try {
         while (window.isOpen()) {
@@ -65,9 +67,15 @@ void Game::run() {
             }
 
             elapsedTimeFastObstacle = fastObstacleTimer.getElapsedTime();
+            elapsedTimeSlowObstacle = slowObstacleTimer.getElapsedTime();
             if (elapsedTimeFastObstacle.asSeconds() >= FAST_OBSTACLE_SPAWN_INTERVAL) {
                 spawnFastObstacle();
                 fastObstacleTimer.restart();
+            }
+
+            if (elapsedTimeSlowObstacle.asSeconds() >= SLOW_OBSTACLE_SPAWN_INTERVAL) {
+                spawnSlowObstacle();
+                slowObstacleTimer.restart();
             }
 
             for (auto& obstacle : obstacles) {
@@ -141,6 +149,35 @@ void Game::spawnFastObstacle() {
     }
 }
 
+void Game::spawnSlowObstacle() {
+    static sf::Clock slowObstacleTimer;
+
+    try {
+        sf::Time elapsedTimeSlowObstacle = slowObstacleTimer.getElapsedTime();
+        if (obstacles.empty()) {
+            for (int i = 0; i < NUM_OBSTACLES; i++) {
+                auto *obstacle = new Obstacle();
+                obstacles.push_back(obstacle);
+            }
+        }
+        if (elapsedTimeSlowObstacle.asSeconds() >= SLOW_OBSTACLE_DELETE_INTERVAL) {
+            if (obstacles.back()->getSprite().getPosition().x < 800.0f) {
+                auto *slowObstacle = new SlowObstacle();
+                obstacles.push_back(slowObstacle);
+                slowObstacleTimer.restart();
+            }
+        }
+    } catch (const ObstacleTextureLoadException& e) {
+        std::cerr << "Obstacle texture load exception: " << e.what() << std::endl;
+
+    } catch (const ObstacleInvalidPositionException& e) {
+        std::cerr << "Obstacle invalid position exception: " << e.what() << std::endl;
+
+    } catch (const std::exception& e) {
+        std::cerr << "Unexpected exception during slow obstacle spawn: " << e.what() << std::endl;
+        handleGameOver();
+    }
+}
 
 
 

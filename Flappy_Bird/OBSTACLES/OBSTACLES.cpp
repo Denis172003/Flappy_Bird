@@ -57,6 +57,14 @@ void FastObstacle::update() {
         die();
 }
 
+void SlowObstacle::update() {
+
+    sprite.move(velocity/2.0f);
+
+    if (sprite.getPosition().x < -100.0f)
+        die();
+}
+
 
 void Obstacle::die() {
     sf::Vector2f startPosition(800.0f, -100.0f);
@@ -64,6 +72,12 @@ void Obstacle::die() {
 }
 
 void FastObstacle::die() {
+
+    sf::Vector2f startPosition(800.0f, -100.0f);
+    sprite.setPosition(startPosition);
+}
+
+void SlowObstacle::die() {
 
     sf::Vector2f startPosition(800.0f, -100.0f);
     sprite.setPosition(startPosition);
