@@ -66,7 +66,7 @@ std::ostream& operator<<(std::ostream& out, const Obstacle& obstacle) {
 void Obstacle::update() {
         sprite.move(velocity);
 
-        if (sprite.getPosition().x < -100.0f)
+        if (sprite.getPosition().x < -150.0f)
             die();
 }
 
@@ -75,7 +75,7 @@ void FastObstacle::update() {
 
     sprite.move(velocity*30.0f);
 
-    if (sprite.getPosition().x < -100.0f)
+    if (sprite.getPosition().x < -400.0f)
         die();
 }
 
