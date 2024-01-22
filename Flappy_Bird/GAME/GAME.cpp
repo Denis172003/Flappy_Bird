@@ -132,7 +132,7 @@ void Game::spawnFastObstacle() {
         }
         if (elapsedTimeFastObstacle.asSeconds() >= FAST_OBSTACLE_DELETE_INTERVAL) {
             if (obstacles.back()->getSprite().getPosition().x < 800.0f) {
-                auto *fastObstacle = new FastObstacle( );
+                auto *fastObstacle = new FastObstacle();
                 obstacles.push_back(fastObstacle);
                 fastObstacleTimer.restart();
             }
@@ -161,7 +161,7 @@ void Game::spawnSlowObstacle() {
         if (elapsedTimeSlowObstacle.asSeconds() >= SLOW_OBSTACLE_DELETE_INTERVAL) {
             if (obstacles.back()->getSprite().getPosition().x < 800.0f) {
 
-
+                auto *slowObstacle = new SlowObstacle();
                 obstacles.push_back(slowObstacle);
                 slowObstacleTimer.restart();
             }
