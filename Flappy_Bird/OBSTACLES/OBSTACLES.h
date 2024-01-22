@@ -39,8 +39,8 @@ public:
 
     void update()override;
     void die()override;
-   // FastObstacle(const FastObstacle&) = delete;
-    //FastObstacle& operator=(const FastObstacle&) = delete;
+  //  FastObstacle(const FastObstacle&) = delete;
+  //  FastObstacle& operator=(const FastObstacle&) = delete;
     const sf::Sprite& getSprite() const override  { return sprite; }
 
 };
@@ -52,7 +52,7 @@ public:
     void update()override;
     void die()override;
    // SlowObstacle(const SlowObstacle&) = delete;
-    //SlowObstacle& operator=(const SlowObstacle&) = delete;
+   // SlowObstacle& operator=(const SlowObstacle&) = delete;
     const sf::Sprite& getSprite() const override  { return sprite; }
 
 };

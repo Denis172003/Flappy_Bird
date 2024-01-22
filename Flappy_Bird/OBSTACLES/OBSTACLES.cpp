@@ -1,9 +1,8 @@
 // OBSTACLES.cpp
-
+#include <random>
+#include <iostream>
 #include "OBSTACLES.h"
 #include "../EXCEPTIONS/EXCEPTIONS.h"
-#include <iostream>
-#include <random>
 
 Obstacle::Obstacle()
         : texture(),
@@ -14,14 +13,11 @@ Obstacle::Obstacle()
         throw ObstacleTextureLoadException("Failed to load obstacle texture");
     }
 
-
     sprite.setTexture(texture);
 
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, 3);
-
-
 
     switch (dis(gen)) {
         case 0:
@@ -37,15 +33,14 @@ Obstacle::Obstacle()
             sprite.setPosition({2900.0f, -10.0f});
             break;
     }
-
 }
 
 Obstacle::~Obstacle() {
     std::cout << "Obstacle destructor\n";
 }
 
-Obstacle::Obstacle(const Obstacle &obstacle): texture(obstacle.texture), sprite(obstacle.sprite), velocity(obstacle.velocity) {
-
+Obstacle::Obstacle(const Obstacle& obstacle)
+        : texture(obstacle.texture), sprite(obstacle.sprite), velocity(obstacle.velocity) {
 }
 
 Obstacle& Obstacle::operator=(const Obstacle& obstacle) {
@@ -64,32 +59,27 @@ std::ostream& operator<<(std::ostream& out, const Obstacle& obstacle) {
 }
 
 void Obstacle::update() {
-        sprite.move(velocity);
+    sprite.move(velocity);
 
-        if (sprite.getPosition().x < -150.0f)
-            die();
+    if (sprite.getPosition().x < -150.0f)
+        die();
 }
 
-
 void FastObstacle::update() {
-
-    sprite.move(velocity*30.0f);
+    sprite.move(velocity * 30.0f);
 
     if (sprite.getPosition().x < -400.0f)
         die();
 }
 
 void SlowObstacle::update() {
-
-    sprite.move(velocity/2.0f);
+    sprite.move(velocity / 2.0f);
 
     if (sprite.getPosition().x < -100.0f)
         die();
 }
 
-
 void Obstacle::die() {
-
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, 3);
@@ -108,11 +98,9 @@ void Obstacle::die() {
             sprite.setPosition({2900.0f, -10.0f});
             break;
     }
-
 }
 
 void FastObstacle::die() {
-
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, 3);
@@ -134,7 +122,6 @@ void FastObstacle::die() {
 }
 
 void SlowObstacle::die() {
-
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, 3);
@@ -155,7 +142,6 @@ void SlowObstacle::die() {
     }
 }
 
-
 void Obstacle::setPosition(float x, float y) {
     if (x < 0.0f || y < 0.0f) {
         throw ObstacleInvalidPositionException("Invalid position for obstacle");
@@ -165,9 +151,7 @@ void Obstacle::setPosition(float x, float y) {
 }
 
 Obstacle::Obstacle(Obstacle&& obstacle) noexcept
-        : texture(obstacle.texture),
-          sprite(std::move(obstacle.sprite)),
-          velocity(obstacle.velocity) {
+        : texture(obstacle.texture), sprite(std::move(obstacle.sprite)), velocity(obstacle.velocity) {
 }
 
 Obstacle& Obstacle::operator=(Obstacle&& obstacle) noexcept {
@@ -178,4 +162,3 @@ Obstacle& Obstacle::operator=(Obstacle&& obstacle) noexcept {
     }
     return *this;
 }
-

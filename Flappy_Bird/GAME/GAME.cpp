@@ -132,17 +132,15 @@ void Game::spawnFastObstacle() {
         }
         if (elapsedTimeFastObstacle.asSeconds() >= FAST_OBSTACLE_DELETE_INTERVAL) {
             if (obstacles.back()->getSprite().getPosition().x < 800.0f) {
-                auto *fastObstacle = new FastObstacle();
+                auto *fastObstacle = new FastObstacle( );
                 obstacles.push_back(fastObstacle);
                 fastObstacleTimer.restart();
             }
         }
     } catch (const ObstacleTextureLoadException& e) {
         std::cerr << "Obstacle texture load exception: " << e.what() << std::endl;
-
     } catch (const ObstacleInvalidPositionException& e) {
         std::cerr << "Obstacle invalid position exception: " << e.what() << std::endl;
-
     } catch (const std::exception& e) {
         std::cerr << "Unexpected exception during fast obstacle spawn: " << e.what() << std::endl;
         handleGameOver();
@@ -162,17 +160,16 @@ void Game::spawnSlowObstacle() {
         }
         if (elapsedTimeSlowObstacle.asSeconds() >= SLOW_OBSTACLE_DELETE_INTERVAL) {
             if (obstacles.back()->getSprite().getPosition().x < 800.0f) {
-                auto *slowObstacle = new SlowObstacle();
+
+
                 obstacles.push_back(slowObstacle);
                 slowObstacleTimer.restart();
             }
         }
     } catch (const ObstacleTextureLoadException& e) {
         std::cerr << "Obstacle texture load exception: " << e.what() << std::endl;
-
     } catch (const ObstacleInvalidPositionException& e) {
         std::cerr << "Obstacle invalid position exception: " << e.what() << std::endl;
-
     } catch (const std::exception& e) {
         std::cerr << "Unexpected exception during slow obstacle spawn: " << e.what() << std::endl;
         handleGameOver();
