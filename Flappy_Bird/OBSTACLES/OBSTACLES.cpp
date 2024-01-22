@@ -3,6 +3,7 @@
 #include "OBSTACLES.h"
 #include "../EXCEPTIONS/EXCEPTIONS.h"
 #include <iostream>
+#include <random>
 
 Obstacle::Obstacle()
         : texture(),
@@ -13,10 +14,31 @@ Obstacle::Obstacle()
         throw ObstacleTextureLoadException("Failed to load obstacle texture");
     }
 
-    sprite.setTexture(texture);
-    sprite.setPosition({800.0f, -100.0f});
-}
 
+    sprite.setTexture(texture);
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 3);
+
+
+
+    switch (dis(gen)) {
+        case 0:
+            sprite.setPosition({800.0f, -150.0f});
+            break;
+        case 1:
+            sprite.setPosition({1600.0f, -200.0f});
+            break;
+        case 2:
+            sprite.setPosition({2200.0f, -80.0f});
+            break;
+        case 3:
+            sprite.setPosition({2900.0f, -10.0f});
+            break;
+    }
+
+}
 
 Obstacle::~Obstacle() {
     std::cout << "Obstacle destructor\n";
@@ -67,20 +89,70 @@ void SlowObstacle::update() {
 
 
 void Obstacle::die() {
-    sf::Vector2f startPosition(800.0f, -100.0f);
-    sprite.setPosition(startPosition);
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 3);
+
+    switch (dis(gen)) {
+        case 0:
+            sprite.setPosition({800.0f, -150.0f});
+            break;
+        case 1:
+            sprite.setPosition({1600.0f, -200.0f});
+            break;
+        case 2:
+            sprite.setPosition({2200.0f, -80.0f});
+            break;
+        case 3:
+            sprite.setPosition({2900.0f, -10.0f});
+            break;
+    }
+
 }
 
 void FastObstacle::die() {
 
-    sf::Vector2f startPosition(800.0f, -100.0f);
-    sprite.setPosition(startPosition);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 3);
+
+    switch (dis(gen)) {
+        case 0:
+            sprite.setPosition({800.0f, -150.0f});
+            break;
+        case 1:
+            sprite.setPosition({1600.0f, -200.0f});
+            break;
+        case 2:
+            sprite.setPosition({2200.0f, -80.0f});
+            break;
+        case 3:
+            sprite.setPosition({2900.0f, -10.0f});
+            break;
+    }
 }
 
 void SlowObstacle::die() {
 
-    sf::Vector2f startPosition(800.0f, -100.0f);
-    sprite.setPosition(startPosition);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 3);
+
+    switch (dis(gen)) {
+        case 0:
+            sprite.setPosition({800.0f, -150.0f});
+            break;
+        case 1:
+            sprite.setPosition({1600.0f, -200.0f});
+            break;
+        case 2:
+            sprite.setPosition({2200.0f, -80.0f});
+            break;
+        case 3:
+            sprite.setPosition({2900.0f, -10.0f});
+            break;
+    }
 }
 
 

@@ -11,7 +11,6 @@ Player::Player()
           sprite(),
           velocity({0.0f, 0.0f}) {
 
-    try {
         if (!texture.loadFromFile("Assets/Animation_Bird.png")) {
             throw PlayerTextureLoadException("Failed to load player texture");
         }
@@ -20,9 +19,6 @@ Player::Player()
         sprite.setPosition({100.0f, 300.0f});
         updateUvRect(&texture);
 
-    } catch (const PlayerTextureLoadException& e) {
-        std::cerr << e.what() << std::endl;
-    }
 }
 
 
