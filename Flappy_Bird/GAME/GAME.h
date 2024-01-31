@@ -5,6 +5,7 @@
 #include "../OBSTACLES/OBSTACLES.h"
 #include "../PLAYER/PLAYER.h"
 #include "../Screen/GameOver.h"
+#include "../GameSettings.h"
 
 class Game {
 public:
@@ -23,6 +24,7 @@ private:
     Player::Animation animation;
     std::vector<Obstacle*> obstacles;
     GameOver gameOverScreen;
+    GameSettings* settings;
     bool gameOver;
 
     void spawnFastObstacle();

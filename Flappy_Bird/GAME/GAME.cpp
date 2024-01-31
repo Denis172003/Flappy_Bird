@@ -11,7 +11,7 @@ const float SLOW_OBSTACLE_SPAWN_INTERVAL = 5.0f;
 const float SLOW_OBSTACLE_DELETE_INTERVAL = 10.0f;
 
 Game::Game()
-        : window(sf::VideoMode(800, 600), "Flappy Bird", sf::Style::Default),
+        : window(sf::VideoMode(GameSettings::getInstance()->getScreenWidth(), 600), "Flappy Bird", sf::Style::Default),
           backgroundTexture(),
           background(),
           whitebgTexture(),
@@ -20,8 +20,8 @@ Game::Game()
           animation(&player.getTexture(), sf::Vector2u(3, 3), 0.2f),
           obstacles(),
           gameOverScreen(),
+          settings(GameSettings::getInstance()),
           gameOver(false) {
-
     window.setTitle("Flappy Bird");
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);

@@ -122,7 +122,9 @@ add_executable(${PROJECT_NAME} main.cpp
         Flappy_Bird/EXCEPTIONS/EXCEPTIONS.cpp
         Flappy_Bird/EXCEPTIONS/EXCEPTIONS.h
         Flappy_Bird/GameObject/GameObject.cpp
-        Flappy_Bird/GameObject/GameObject.h)
+        Flappy_Bird/GameObject/GameObject.h
+        Flappy_Bird/GameSettings.cpp
+        Flappy_Bird/GameSettings.h)
 
 ###############################################################################
 
