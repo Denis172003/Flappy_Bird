@@ -1,4 +1,4 @@
-
+// main.cpp
 #include "./Flappy_Bird/OBSTACLES/OBSTACLES.h"
 #include "./Flappy_Bird/GAME/GAME.h"
 
@@ -11,7 +11,7 @@ int main() {
     XInitThreads();
 #endif
 
-    Game game = Game();
+    Game& game = Game::getInstance();
     game.run();
     return 0;
 }

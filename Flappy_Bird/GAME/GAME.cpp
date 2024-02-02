@@ -1,3 +1,4 @@
+// GAME.cpp
 #include "GAME.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -10,8 +11,19 @@ const float FAST_OBSTACLE_DELETE_INTERVAL = 15.0f;
 const float SLOW_OBSTACLE_SPAWN_INTERVAL = 5.0f;
 const float SLOW_OBSTACLE_DELETE_INTERVAL = 10.0f;
 
+
+Game* Game::instance = nullptr;
+
+Game& Game::getInstance() {
+
+    if (instance == nullptr) {
+        instance = new Game();
+    }
+    return *instance;
+}
+
 Game::Game()
-        : window(sf::VideoMode(GameSettings::getInstance()->getScreenWidth(), 600), "Flappy Bird", sf::Style::Default),
+        : window(sf::VideoMode(800, 600), "Flappy Bird", sf::Style::Default),
           backgroundTexture(),
           background(),
           whitebgTexture(),
@@ -20,8 +32,8 @@ Game::Game()
           animation(&player.getTexture(), sf::Vector2u(3, 3), 0.2f),
           obstacles(),
           gameOverScreen(),
-          settings(GameSettings::getInstance()),
           gameOver(false) {
+
     window.setTitle("Flappy Bird");
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
@@ -36,7 +48,6 @@ Game::Game()
 Game::~Game() {
     std::cout << "Game destructor\n";
 }
-
 
 void Game::run() {
     sf::Clock clock, timer, fastObstacleTimer, slowObstacleTimer;
@@ -112,7 +123,6 @@ void Game::run() {
     }
 }
 
-
 void Game::throwOnTextureLoad(const std::string& textureName, sf::Texture& texture, const std::string& filePath) {
     if (!texture.loadFromFile(filePath)) {
         throw FlappyBirdException("Failed to load " + textureName + " texture");
@@ -126,13 +136,13 @@ void Game::spawnFastObstacle() {
         sf::Time elapsedTimeFastObstacle = fastObstacleTimer.getElapsedTime();
         if (obstacles.empty()) {
             for (int i = 0; i < NUM_OBSTACLES; i++) {
-                auto *obstacle = new Obstacle();
+                auto* obstacle = new Obstacle();
                 obstacles.push_back(obstacle);
             }
         }
         if (elapsedTimeFastObstacle.asSeconds() >= FAST_OBSTACLE_DELETE_INTERVAL) {
             if (obstacles.back()->getSprite().getPosition().x < 800.0f) {
-                auto *fastObstacle = new FastObstacle();
+                auto* fastObstacle = new FastObstacle();
                 obstacles.push_back(fastObstacle);
                 fastObstacleTimer.restart();
             }
@@ -154,14 +164,14 @@ void Game::spawnSlowObstacle() {
         sf::Time elapsedTimeSlowObstacle = slowObstacleTimer.getElapsedTime();
         if (obstacles.empty()) {
             for (int i = 0; i < NUM_OBSTACLES; i++) {
-                auto *obstacle = new Obstacle();
+                auto* obstacle = new Obstacle();
                 obstacles.push_back(obstacle);
             }
         }
         if (elapsedTimeSlowObstacle.asSeconds() >= SLOW_OBSTACLE_DELETE_INTERVAL) {
             if (obstacles.back()->getSprite().getPosition().x < 800.0f) {
 
-                auto *slowObstacle = new SlowObstacle();
+                auto* slowObstacle = new SlowObstacle();
                 obstacles.push_back(slowObstacle);
                 slowObstacleTimer.restart();
             }
@@ -176,8 +186,6 @@ void Game::spawnSlowObstacle() {
     }
 }
 
-
-
 void Game::handleEvents() {
     sf::Event e = sf::Event();
     while (window.pollEvent(e)) {
@@ -187,7 +195,7 @@ void Game::handleEvents() {
                     throw WindowClosedException();
                 case sf::Event::Resized:
                     std::cout  << "New width: " << window.getSize().x << '\n'
-                              << "New height: " << window.getSize().y << '\n';
+                               << "New height: " << window.getSize().y << '\n';
                     break;
                 case sf::Event::KeyPressed:
                     if (e.key.code == sf::Keyboard::Space || e.key.code == sf::Keyboard::R) {
