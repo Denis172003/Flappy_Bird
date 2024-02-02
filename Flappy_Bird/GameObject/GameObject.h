@@ -1,32 +1,28 @@
-#ifndef OOP_GAMEOBJECT_H
-#define OOP_GAMEOBJECT_H
+#ifndef OOP_OBSTACLEFACTORY_H
+#define OOP_OBSTACLEFACTORY_H
 
 #include <memory>
-#include "../PLAYER/PLAYER.h"
+#include <stdexcept>
 #include "../OBSTACLES/OBSTACLES.h"
 
-class GameObject {
-public:
-    virtual ~GameObject() = default;
+enum class ObstacleType {
+    Fast,
+    Slow
 };
 
-enum class ObjectType {
-    Player,
-    Obstacle
-};
-
-class ObjectFactory {
+class ObstacleFactory {
 public:
-    static std::shared_ptr<GameObject> createObjectFactory(ObjectType type) {
+    static std::unique_ptr<Obstacle> createObstacle(ObstacleType type) {
         switch (type) {
-            case ObjectType::Player:
-                return std::shared_ptr<Player>();
-            case ObjectType::Obstacle:
-                return std::shared_ptr<Obstacle>();
+            case ObstacleType::Fast:
+                return std::make_unique<FastObstacle>();
+            case ObstacleType::Slow:
+                return std::make_unique<SlowObstacle>();
+
             default:
-                return nullptr;
+                throw std::invalid_argument("Invalid obstacle type");
         }
     }
 };
 
-#endif //OOP_GAMEOBJECT_H
+#endif // OOP_OBSTACLEFACTORY_H
