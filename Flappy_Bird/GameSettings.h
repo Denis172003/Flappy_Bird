@@ -1,6 +1,3 @@
-//
-// Created by denis on 2/1/2024.
-//
 
 #ifndef OOP_GAMESETTINGS_H
 #define OOP_GAMESETTINGS_H
@@ -21,8 +18,8 @@ public:
 
     static GameSettings* getInstance();
 
-    int getScreenWidth() const;
-    int getScreenHeight() const;
+    [[nodiscard]] int getScreenWidth() const;
+    [[nodiscard]] int getScreenHeight() const;
     void setScreenWidth(int width);
     void setScreenHeight(int height);
 };

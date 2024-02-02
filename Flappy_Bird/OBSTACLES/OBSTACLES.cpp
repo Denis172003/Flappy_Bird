@@ -121,6 +121,8 @@ void FastObstacle::die() {
     }
 }
 
+FastObstacle::FastObstacle() = default;
+
 void SlowObstacle::die() {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -141,6 +143,8 @@ void SlowObstacle::die() {
             break;
     }
 }
+
+SlowObstacle::SlowObstacle() = default;
 
 void Obstacle::setPosition(float x, float y) {
     if (x < 0.0f || y < 0.0f) {
