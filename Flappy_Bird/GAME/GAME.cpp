@@ -4,6 +4,8 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include "../EXCEPTIONS/EXCEPTIONS.h"
+//#include "../OBSTACLES/OBSTACLES.h"
+#include "../GameObject/GameObject.h"
 
 const int NUM_OBSTACLES = 4;
 const float FAST_OBSTACLE_SPAWN_INTERVAL = 10.0f;
@@ -136,14 +138,14 @@ void Game::spawnFastObstacle() {
         sf::Time elapsedTimeFastObstacle = fastObstacleTimer.getElapsedTime();
         if (obstacles.empty()) {
             for (int i = 0; i < NUM_OBSTACLES; i++) {
-                auto* obstacle = new Obstacle();
-                obstacles.push_back(obstacle);
+                auto obstacle = ObstacleFactory::createObstacle(ObstacleType::Fast);
+                //obstacles.push_back(std::move(obstacle));
             }
         }
         if (elapsedTimeFastObstacle.asSeconds() >= FAST_OBSTACLE_DELETE_INTERVAL) {
             if (obstacles.back()->getSprite().getPosition().x < 800.0f) {
-                auto* fastObstacle = new FastObstacle();
-                obstacles.push_back(fastObstacle);
+                auto fastObstacle = ObstacleFactory::createObstacle(ObstacleType::Fast);
+                //obstacles.push_back(std::move(fastObstacle));
                 fastObstacleTimer.restart();
             }
         }
@@ -164,15 +166,14 @@ void Game::spawnSlowObstacle() {
         sf::Time elapsedTimeSlowObstacle = slowObstacleTimer.getElapsedTime();
         if (obstacles.empty()) {
             for (int i = 0; i < NUM_OBSTACLES; i++) {
-                auto* obstacle = new Obstacle();
-                obstacles.push_back(obstacle);
+                auto obstacle = ObstacleFactory::createObstacle(ObstacleType::Slow);
+                //obstacles.push_back(std::move(obstacle));
             }
         }
         if (elapsedTimeSlowObstacle.asSeconds() >= SLOW_OBSTACLE_DELETE_INTERVAL) {
             if (obstacles.back()->getSprite().getPosition().x < 800.0f) {
-
-                auto* slowObstacle = new SlowObstacle();
-                obstacles.push_back(slowObstacle);
+                auto slowObstacle = ObstacleFactory::createObstacle(ObstacleType::Slow);
+                //obstacles.push_back(std::move(slowObstacle));
                 slowObstacleTimer.restart();
             }
         }

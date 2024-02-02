@@ -12,17 +12,8 @@ enum class ObstacleType {
 
 class ObstacleFactory {
 public:
-    static std::unique_ptr<Obstacle> createObstacle(ObstacleType type) {
-        switch (type) {
-            case ObstacleType::Fast:
-                return std::make_unique<FastObstacle>();
-            case ObstacleType::Slow:
-                return std::make_unique<SlowObstacle>();
-
-            default:
-                throw std::invalid_argument("Invalid obstacle type");
-        }
-    }
+    static std::unique_ptr<Obstacle> createObstacle(ObstacleType type);
 };
 
 #endif // OOP_OBSTACLEFACTORY_H
+
